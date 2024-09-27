@@ -1,101 +1,66 @@
-import Image from "next/image";
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  
+  const socialLinks = [
+    {
+      href: "https://linkedin.com",
+      icon: "/images/linkedin.svg",
+      alt: "LinkedIn"
+    },
+    {
+      href: "https://github.com",
+      icon: "/images/github.svg",
+      alt: "GitHub"
+    },
+    {
+      href: "https://twitter.com",
+      icon: "/images/twitter.svg",
+      alt: "Twitter"
+    }
+  ];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className="h-screen bg-background flex flex-col justify-between">
+      <main className="flex px-24 justify-between items-center h-screen w-full max-w-[1440px] mx-auto">
+        <div className="flex flex-col items-start justify-center gap-12">
+          <h1 className="text-primary text-[200px] font-bold -tracking-thighter leading-[80%]">
+            ANJA<br />ZGODIC
+          </h1>
+          <div className="flex space-x-4">
+          {socialLinks.map((link, index) => (
+              <Link key={index} href={link.href} className="text-primary hover:text-primary-dark transition-colors duration-300">
+                <Image
+                  src={link.icon}
+                  alt={link.alt}
+                  width={24}
+                  height={24}
+                  className="text-primary"
+                />
+              </Link>
+            ))}
+          </div>
         </div>
+
+        <nav className="flex flex-col space-y-2">
+          {['ABOUT', 'RESEARCH', 'EDUCATION', 'EXPERIENCE', 'IN THE MEDIA', 'CONTACT'].map((item) => (
+            <Link
+              key={item}
+              href={`/${item.toLowerCase().replace(/ /g, '-')}`}
+              className="bg-primary text-white text-sm py-2 px-4 w-full md:w-64 text-left"
+            >
+              {item}
+            </Link>
+          ))}
+          <Link
+            href="/resume.pdf"
+            className="border border-primary text-primary py-2 px-4 text-sm w-full md:w-64 text-center font-bold"
+          >
+            DOWNLOAD RESUME
+          </Link>
+        </nav>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
