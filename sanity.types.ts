@@ -99,6 +99,11 @@ export type Contact = {
     _type: "block";
     _key: string;
   }>;
+  socialLinks?: Array<{
+    platform?: string;
+    url?: string;
+    _key: string;
+  }>;
 };
 
 export type Media = {
@@ -252,12 +257,72 @@ export type Research = {
 
 export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Contact | Media | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Experience | Software | Research;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./src/app/contact/page.tsx
+// Source: ./src/app/(site)/page.tsx
 // Variable: settingsQuery
-// Query: *[_type == "siteSettings"][0]{  contactEmail,  contactAddress}
-export type SettingsQueryResult = null;
+// Query: *[_type == "contact"][0]{  email,  address,  socialLinks[]{    platform,    url,    icon  }}
+export type SettingsQueryResult = {
+  email: string | null;
+  address: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  socialLinks: Array<{
+    platform: string | null;
+    url: string | null;
+    icon: null;
+  }> | null;
+} | null;
 
-// Source: ./src/app/experience/page.tsx
+// Source: ./src/app/(site)/contact/page.tsx
+// Variable: ContactQuery
+// Query: *[_type == "contact"][0]
+export type ContactQueryResult = {
+  _id: string;
+  _type: "contact";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  email?: string;
+  address?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  socialLinks?: Array<{
+    platform?: string;
+    url?: string;
+    _key: string;
+  }>;
+} | null;
+
+// Source: ./src/app/(site)/experience/page.tsx
 // Variable: experienceQuery
 // Query: *[_type == "experience"] | order(startYear desc) {  _id,  title,  company,  startYear,  endYear,  description,  url,  responsibilities}
 export type ExperienceQueryResult = Array<{
@@ -271,7 +336,7 @@ export type ExperienceQueryResult = Array<{
   responsibilities: Array<string> | null;
 }>;
 
-// Source: ./src/app/media/page.tsx
+// Source: ./src/app/(site)/media/page.tsx
 // Variable: mediaQuery
 // Query: *[_type == "media"] | order(publishedAt desc) {  _id,  title,  "imageUrl": image.asset->url,  link,}
 export type MediaQueryResult = Array<{
@@ -281,7 +346,7 @@ export type MediaQueryResult = Array<{
   link: string | null;
 }>;
 
-// Source: ./src/app/research/page.tsx
+// Source: ./src/app/(site)/research/page.tsx
 // Variable: researchQuery
 // Query: *[_type == "research"] | order(_createdAt desc) {  _id,  title,  content}
 export type ResearchQueryResult = Array<{
@@ -307,7 +372,7 @@ export type ResearchQueryResult = Array<{
   }> | null;
 }>;
 
-// Source: ./src/app/software/page.tsx
+// Source: ./src/app/(site)/software/page.tsx
 // Variable: softwareQuery
 // Query: *[_type == "software"] | order(_createdAt desc) {  _id,  title,  shortDescription,  url,  content}
 export type SoftwareQueryResult = Array<{
@@ -339,7 +404,8 @@ export type SoftwareQueryResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"siteSettings\"][0]{\n  contactEmail,\n  contactAddress\n}": SettingsQueryResult;
+    "*[_type == \"contact\"][0]{\n  email,\n  address,\n  socialLinks[]{\n    platform,\n    url,\n    icon\n  }\n}": SettingsQueryResult;
+    "*[_type == \"contact\"][0]": ContactQueryResult;
     "*[_type == \"experience\"] | order(startYear desc) {\n  _id,\n  title,\n  company,\n  startYear,\n  endYear,\n  description,\n  url,\n  responsibilities\n}": ExperienceQueryResult;
     "*[_type == \"media\"] | order(publishedAt desc) {\n  _id,\n  title,\n  \"imageUrl\": image.asset->url,\n  link,\n}": MediaQueryResult;
     "*[_type == \"research\"] | order(_createdAt desc) {\n  _id,\n  title,\n  content\n}": ResearchQueryResult;
