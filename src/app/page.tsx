@@ -21,7 +21,8 @@ export default function Home() {
   ];
 
   return (
-    <div className="flex flex-col items-start justify-center gap-12">
+    <div className="flex flex-col items-center justify-center w-full h-full">
+      <div className='flex flex-col items-start gap-12'>
       <h1 className="text-primary text-[200px] font-bold -tracking-thighter leading-[80%]">
         ANJA<br />ZGODIC
       </h1>
@@ -37,6 +38,7 @@ export default function Home() {
             />
           </Link>
         ))}
+      </div>
       </div>
     </div>
   );

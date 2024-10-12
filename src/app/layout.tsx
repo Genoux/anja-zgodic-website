@@ -1,5 +1,5 @@
-import LayoutClient from '@/app/_components/LayoutClient';
-import './globals.css';
+// app/layout.tsx
+import LayoutWrapper from './LayoutWrapper'
 
 export default function RootLayout({
   children,
@@ -9,10 +9,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <LayoutClient>
-          {children}
-        </LayoutClient>
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
-  );
+  )
 }
