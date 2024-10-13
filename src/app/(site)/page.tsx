@@ -5,7 +5,6 @@ import { groq } from 'next-sanity'
 import { Contact } from '@/types'
 import { urlFor } from '@/sanity/lib/image'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import { Key } from 'react';
 import { UrlObject } from 'url';
 
 const settingsQuery = groq`*[_type == "contact"][0]{
@@ -32,7 +31,7 @@ export default async function Home() {
           ANJA<br />ZGODIC
         </h1>
         <div className="flex space-x-4">
-          {contact.socialLinks?.map((link: { url?: string | UrlObject; icon?: SanityImageSource; platform?: string; _key: string }, index: number) => (
+          {contact.socialLinks?.map((link: { url?: string | UrlObject; icon?: SanityImageSource; platform?: string; _key: string }) => (
             <Link key={link._key} href={link.url || '#'} className="text-primary hover:text-primary-dark transition-colors duration-300">
               {link.icon && (
                 <Image

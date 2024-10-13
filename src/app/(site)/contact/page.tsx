@@ -4,8 +4,6 @@ import { Contact } from '@/types'
 import { PortableText } from '@portabletext/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Key } from 'react'
-import { UrlObject } from 'url'
 
 const ContactQuery = groq`*[_type == "contact"][0]`
 
@@ -15,7 +13,6 @@ async function getSiteSettings(): Promise<Contact> {
 
 export default async function ContactPage() {
   const contact = await getSiteSettings()
-  console.log(contact)
 
   return (
     <div className="h-full p-8 overflow-auto scrollbar-blue flex flex-col items-center justify-center">
@@ -38,7 +35,7 @@ export default async function ContactPage() {
         <div className="mt-8">
           <h2 className="text-2xl font-semibold mb-2">Social Links</h2>
           <div className="flex space-x-4">
-            {contact.socialLinks?.map((link: { url?: string; platform?: string; _key: string }, index: number) => (
+            {contact.socialLinks?.map((link: { url?: string; platform?: string; _key: string }) => (
               link.url && link.platform ? (
                 <Link key={link._key} href={link.url} className="text-primary hover:text-primary-dark transition-colors duration-300">
                   <Image

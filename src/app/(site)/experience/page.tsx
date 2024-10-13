@@ -1,7 +1,10 @@
-// app/experience/page.tsx
+'use client'
+
+import { useEffect, useState, useRef } from 'react'
 import { client } from '@/sanity/lib/client'
 import { groq } from 'next-sanity'
 import { Experience } from '@/types'
+import ScrollTitle from '@/app/(site)/_components/ScrollTitle'
 
 const experienceQuery = groq`*[_type == "experience"] | order(startYear desc) {
   _id,
@@ -18,15 +21,27 @@ async function getExperienceItems(): Promise<Experience[]> {
   return await client.fetch(experienceQuery)
 }
 
-export default async function ExperiencePage() {
-  const experienceItems = await getExperienceItems()
+export default function ExperiencePage() {
+  const [experienceItems, setExperienceItems] = useState<Experience[]>([])
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const fetchExperienceItems = async () => {
+      const data = await getExperienceItems()
+      setExperienceItems(data)
+    }
+    fetchExperienceItems()
+  }, [])
 
   return (
-    <div className="h-full p-8 overflow-auto scrollbar-blue">
-      <h1 className="text-primary text-6xl font-bold mb-8">Experience</h1>
-      <div className="space-y-8">
+    <div ref={containerRef} className="h-full overflow-auto scrollbar-blue">
+      {/* Use ScrollTitle with the scrollable container */}
+      <ScrollTitle title="Experience" containerRef={containerRef} />
+      <div className="px-8">
         {experienceItems.map((item: Experience) => (
-          <ExperienceItem key={item._id} item={item} />
+          <div key={item._id}>
+            <ExperienceItem key={item._id} item={item} />
+        </div>
         ))}
       </div>
     </div>
@@ -35,7 +50,7 @@ export default async function ExperiencePage() {
 
 function ExperienceItem({ item }: { item: Experience }) {
   return (
-    <div className="border-b border-primary border-opacity-10 pb-4">
+    <div className="flex flex-col gap-4 py-8 border-b border-primary border-opacity-10">
       <h2 className="text-2xl font-semibold mb-2">{item.title}</h2>
       <p className="text-lg mb-1">{item.company}</p>
       <p className="text-sm mb-2">
