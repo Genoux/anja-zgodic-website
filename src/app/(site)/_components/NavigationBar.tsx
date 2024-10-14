@@ -26,7 +26,6 @@ const NavigationBar = () => {
 
   return (
     <>
-      {/* Mobile Header with Name and Menu Button */}
       <header className={clsx("z-99 md:hidden flex items-center px-8 py-4 bg-primary text-white fixed top-0 left-0 right-0 z-50", { 'justify-end': isHomePage, 'justify-between': !isHomePage })}>
         {!isHomePage && 
           <h1 className="text-2xl font-bold">Anja Zgodic</h1> 
@@ -36,7 +35,6 @@ const NavigationBar = () => {
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
-          {/* Hamburger and X Icon (same position) */}
           <Menu
             className={`absolute inset-0 transition-opacity duration-300 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}
             size={28}
@@ -56,10 +54,9 @@ const NavigationBar = () => {
                 key={item.name}
                 href={item.href}
                 className={clsx(
-                  "text-2xl font-bold px-8 transition-all duration-300 ease-in-out",
+                  "text-2xl font-bold px-8 transition-all duration-300 ease-in-out w-full",
                   {
-                    '-ml-6 pl-6 transform -translate-x-4 w-[110%]': pathname === item.href, // Active link expands to the left
-                    'w-full': pathname !== item.href // Inactive link style
+                    'opacity-50': pathname === item.href,
                   }
                 )}
                 onClick={toggleMenu}
@@ -70,7 +67,7 @@ const NavigationBar = () => {
             <Link
               href="/resume.pdf"
               className="border border-secondary text-secondary px-4 py-2 font-bold"
-              onClick={toggleMenu} // Close menu on resume download click
+              onClick={toggleMenu}
             >
               DOWNLOAD RESUME
             </Link>
@@ -92,9 +89,10 @@ const NavigationBar = () => {
               key={item.name}
               href={item.href}
               className={clsx(
-                "bg-primary text-white w-full px-4 py-3 text-sm text-left transition-all duration-300 ease-in-out",
+                "bg-primary text-white px-4 py-3 text-sm text-left transition-all duration-125 ease-in-out hover:bg-[#2742CB]",
                 {
-                  '-ml-6 pl-6 transform -translate-x-4 w-[110%]': pathname === item.href // Active link expands to the left
+                  'opacity-50 px-6 w-[110%] hover:bg-primary': pathname === item.href,
+                  'w-full': pathname !== item.href
                 }
               )}
             >

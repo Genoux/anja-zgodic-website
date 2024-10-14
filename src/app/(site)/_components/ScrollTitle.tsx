@@ -14,9 +14,9 @@ interface ScrollTitleProps {
 export default function ScrollTitle({
   title,
   containerRef,
-  minFontSize = 1.5, // Default minimum font size
-  maxFontSize = 2.5, // Default maximum font size
-  scrollMultiplier = 0.01, // Control how fast the font shrinks
+  minFontSize = 1.3,
+  maxFontSize = 2.3,
+  scrollMultiplier = 0.01,
 }: ScrollTitleProps) {
   const [scrollY, setScrollY] = useState(0)
 
@@ -32,7 +32,6 @@ export default function ScrollTitle({
       container.addEventListener('scroll', handleScroll)
     }
 
-    // Cleanup the event listener on component unmount
     return () => {
       if (container) {
         container.removeEventListener('scroll', handleScroll)
@@ -40,12 +39,11 @@ export default function ScrollTitle({
     }
   }, [containerRef])
 
-  // Calculate the font size based on the scroll position
   const fontSizeValue = Math.max(maxFontSize - scrollY * scrollMultiplier, minFontSize)
 
   return (
     <motion.h1
-      className="backdrop-blur-sm bg-opacity-80 text-primary border-b border-primary border-opacity-10 font-bold sticky top-0 z-10 bg-secondary px-8 py-2"
+      className="backdrop-blur-md bg-opacity-80 text-primary border-b border-primary border-opacity-10 font-bold sticky top-0 z-10 bg-secondary px-8 py-2"
       style={{ fontSize: `${fontSizeValue}rem` }}
       animate={{
         fontSize: `${fontSizeValue}rem`,
