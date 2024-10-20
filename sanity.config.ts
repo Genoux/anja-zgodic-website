@@ -5,7 +5,8 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {apiVersion, dataset, projectId} from './src/sanity/env'
 import {schema} from './src/sanity/schemaTypes'
-import {structure} from './src/sanity/structure'
+import { structure } from './src/sanity/structure'
+import { media } from 'sanity-plugin-media'
 
 export default defineConfig({
   basePath: '/studio',
@@ -14,7 +15,8 @@ export default defineConfig({
   schema,
   plugins: [
     structureTool({structure}),
-    visionTool({defaultApiVersion: apiVersion}),
+    visionTool({ defaultApiVersion: apiVersion }),
+    media(),
   ],
   cors: {
     origin: [

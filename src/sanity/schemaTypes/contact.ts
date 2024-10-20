@@ -15,7 +15,7 @@ export default defineType({
       name: 'address',
       title: 'Address',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [{ type: 'block', options: { rows: 2 } }],
     }),
     defineField({
       name: 'socialLinks',
@@ -26,9 +26,9 @@ export default defineType({
         fields: [
           { name: 'platform', type: 'string', title: 'Platform' },
           { name: 'url', type: 'url', title: 'URL' },
-          { 
-            name: 'icon', 
-            title: 'Icon', 
+          {
+            name: 'icon',
+            title: 'Icon',
             type: 'image',
             options: {
               accept: 'image/svg+xml'

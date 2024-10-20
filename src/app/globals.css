@@ -19,6 +19,7 @@
 :root {
   --background: #D5DFE2;
   --primary: #2742CB;
+  --primary-50: rgba(39, 66, 203, 0.5);
 }
 
 
@@ -32,6 +33,25 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.disable-interaction {
+  pointer-events: none;
+  cursor: pointer
+}
+
+@layer components {
+  .responsive-heading {
+    font-size: 15vw;
+  }
+}
+
+
+code {
+  @apply text-sm;
+  background-color: var(--primary-50);
+  color: var(--background);
+  padding: 0 5px;
 }
 
 /* Scrollbar */

@@ -1,19 +1,65 @@
-import type {StructureResolver} from 'sanity/structure'
+import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list';
+import type { StructureResolver } from 'sanity/structure';
+import { DocumentIcon, DesktopIcon } from '@sanity/icons';
 
-// https://www.sanity.io/docs/structure-builder-cheat-sheet
-export const structure: StructureResolver = (S) =>
+export const structure: StructureResolver = (S, context) =>
   S.list()
     .title('Content')
     .items([
+      S.divider(),
       S.listItem()
-        .title('Contact Info')
+        .title('About')
+        .icon(DesktopIcon)
         .child(
           S.editor()
-            .title('Contact Info')
+            .id('about')
+            .schemaType('about')
+            .documentId('about')
+        ),
+      S.listItem()
+        .title('Contact')
+        .icon(DesktopIcon)
+        .child(
+          S.editor()
+            .id('contact')
             .schemaType('contact')
             .documentId('contact')
         ),
-      ...S.documentTypeListItems().filter(
-        (listItem) => !['contact'].includes(listItem.getId() as string)
-      )
-    ])
+      S.divider(),
+      orderableDocumentListDeskItem({
+        type: 'research',
+        title: 'Research',
+        S,
+        context,
+        icon: DocumentIcon,
+      }),
+      orderableDocumentListDeskItem({
+        type: 'software',
+        title: 'Software',
+        S,
+        context,
+        icon: DocumentIcon,
+      }),
+      orderableDocumentListDeskItem({
+        type: 'experience',
+        title: 'Experience',
+        S,
+        context,
+        icon: DocumentIcon,
+      }),
+      orderableDocumentListDeskItem({
+        type: 'media',
+        title: 'In the Media',
+        S,
+        context,
+        icon: DocumentIcon,
+      }),
+      S.divider(),
+      S.listItem()
+      .title('Resume')
+      .child(
+        S.editor()
+          .schemaType('resume')
+          .documentId('resume') // Ensures only one CV can exist
+      ),
+    ]);
