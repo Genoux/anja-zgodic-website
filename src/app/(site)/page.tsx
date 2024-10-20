@@ -28,11 +28,12 @@ export default async function Home() {
     <div className="flex flex-col items-center justify-center w-full h-full">
       <div className="flex flex-col items-center sm:items-start gap-12 h-screen justify-center py-0 sm:py-8">
         <div className='flex flex-col items-center gap-8'>
-        <h1 className="text-primary text-center sm:text-left font-bold leading-[80%] -tracking-tighter responsive-heading">
+        <h1 className="text-primary text-center sm:text-left font-bold leading-[80%] -tracking-tighter text-7xl sm:text-[15vw]">
             ANJA<br />ZGODIC
           </h1>
-        <div className='sm:hidden hover:px-6 transition-all duration-150 ease-in-out flex flex-col text-md items-center md:items-start gap-4 bg-primary py-2 px-4 text-background'>
-          <Link href={'/about'}>About me</Link>
+        <div className='sm:hidden hover:px-6 transition-all duration-150 ease-in-out flex  text-md items-center md:items-start gap-4'>
+            <Link className=' hover:opacity-70 bg-primary py-2 px-4 text-background transition-all duration-150 ease-in-out' href={'/about'}>About me</Link>
+            <Link className='border border-primary py-2 px-4 text-primary hover:bg-primary hover:text-background transition-all duration-150 ease-in-out' href={'/contact'}>Contact</Link>
         </div>
         </div>
         <div className="flex space-x-4">
@@ -50,7 +51,6 @@ export default async function Home() {
             </Link>
           ))}
         </div>
-       
       </div>
     </div>
   );
