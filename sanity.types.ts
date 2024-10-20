@@ -39,6 +39,32 @@ export type SanityImageDimensions = {
   aspectRatio?: number;
 };
 
+export type Geopoint = {
+  _type: "geopoint";
+  lat?: number;
+  lng?: number;
+  alt?: number;
+};
+
+export type Resume = {
+  _id: string;
+  _type: "resume";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  file?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    _type: "file";
+  };
+  updatedAt?: string;
+};
+
 export type SanityFileAsset = {
   _id: string;
   _type: "sanity.fileAsset";
@@ -61,17 +87,31 @@ export type SanityFileAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type Geopoint = {
-  _type: "geopoint";
-  lat?: number;
-  lng?: number;
-  alt?: number;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
+export type About = {
+  _id: string;
+  _type: "about";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
 };
 
 export type Contact = {
@@ -102,6 +142,17 @@ export type Contact = {
   socialLinks?: Array<{
     platform?: string;
     url?: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
     _key: string;
   }>;
 };
@@ -125,6 +176,7 @@ export type Media = {
     _type: "image";
   };
   link?: string;
+  orderRank?: string;
 };
 
 export type SanityImageCrop = {
@@ -197,6 +249,7 @@ export type Experience = {
   description?: string;
   url?: string;
   responsibilities?: Array<string>;
+  orderRank?: string;
 };
 
 export type Software = {
@@ -215,7 +268,7 @@ export type Software = {
       _type: "span";
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    style?: "normal";
     listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
@@ -226,6 +279,7 @@ export type Software = {
     _type: "block";
     _key: string;
   }>;
+  orderRank?: string;
 };
 
 export type Research = {
@@ -253,9 +307,25 @@ export type Research = {
     _type: "block";
     _key: string;
   }>;
+  orderRank?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Contact | Media | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Experience | Software | Research;
+export type MediaTag = {
+  _id: string;
+  _type: "media.tag";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: Slug;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | Resume | SanityFileAsset | About | Contact | Media | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Experience | Software | Research | MediaTag | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/app/(site)/page.tsx
 // Variable: settingsQuery
@@ -283,12 +353,59 @@ export type SettingsQueryResult = {
   socialLinks: Array<{
     platform: string | null;
     url: string | null;
-    icon: null;
+    icon: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
   }> | null;
 } | null;
 
+// Source: ./src/app/(site)/about/page.tsx
+// Variable: aboutQuery
+// Query: *[_type == "about"][0]
+export type AboutQueryResult = {
+  _id: string;
+  _type: "about";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+} | null;
+
+// Source: ./src/app/(site)/_components/NavigationBar.tsx
+// Variable: resumeQuery
+// Query: *[_type == "resume"][0]{  "url": file.asset->url}
+export type ResumeQueryResult = {
+  url: string | null;
+} | null;
+
 // Source: ./src/app/(site)/contact/page.tsx
-// Variable: ContactQuery
+// Variable: contactQuery
 // Query: *[_type == "contact"][0]
 export type ContactQueryResult = {
   _id: string;
@@ -318,41 +435,76 @@ export type ContactQueryResult = {
   socialLinks?: Array<{
     platform?: string;
     url?: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
     _key: string;
   }>;
 } | null;
 
 // Source: ./src/app/(site)/experience/page.tsx
 // Variable: experienceQuery
-// Query: *[_type == "experience"] | order(startYear desc) {  _id,  title,  company,  startYear,  endYear,  description,  url,  responsibilities}
+// Query: *[_type == "experience"] | order(orderRank)
 export type ExperienceQueryResult = Array<{
   _id: string;
-  title: string | null;
-  company: string | null;
-  startYear: number | null;
-  endYear: string | null;
-  description: string | null;
-  url: string | null;
-  responsibilities: Array<string> | null;
+  _type: "experience";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  company?: string;
+  startYear?: number;
+  endYear?: string;
+  description?: string;
+  url?: string;
+  responsibilities?: Array<string>;
+  orderRank?: string;
 }>;
 
 // Source: ./src/app/(site)/media/page.tsx
 // Variable: mediaQuery
-// Query: *[_type == "media"] | order(publishedAt desc) {  _id,  title,  "imageUrl": image.asset->url,  link,}
+// Query: *[_type == "media"] | order(orderRank)
 export type MediaQueryResult = Array<{
   _id: string;
-  title: string | null;
-  imageUrl: string | null;
-  link: string | null;
+  _type: "media";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  link?: string;
+  orderRank?: string;
 }>;
 
 // Source: ./src/app/(site)/research/page.tsx
 // Variable: researchQuery
-// Query: *[_type == "research"] | order(_createdAt desc) {  _id,  title,  content}
+// Query: *[_type == "research"] | order(orderRank)
 export type ResearchQueryResult = Array<{
   _id: string;
-  title: string | null;
-  content: Array<{
+  _type: "research";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  content?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -369,25 +521,30 @@ export type ResearchQueryResult = Array<{
     level?: number;
     _type: "block";
     _key: string;
-  }> | null;
+  }>;
+  orderRank?: string;
 }>;
 
 // Source: ./src/app/(site)/software/page.tsx
 // Variable: softwareQuery
-// Query: *[_type == "software"] | order(_createdAt desc) {  _id,  title,  shortDescription,  url,  content}
+// Query: *[_type == "software"] | order(orderRank)
 export type SoftwareQueryResult = Array<{
   _id: string;
-  title: string | null;
-  shortDescription: string | null;
-  url: string | null;
-  content: Array<{
+  _type: "software";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  shortDescription?: string;
+  url?: string;
+  content?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
       _type: "span";
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    style?: "normal";
     listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
@@ -397,7 +554,8 @@ export type SoftwareQueryResult = Array<{
     level?: number;
     _type: "block";
     _key: string;
-  }> | null;
+  }>;
+  orderRank?: string;
 }>;
 
 // Query TypeMap
@@ -405,10 +563,12 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"contact\"][0]{\n  email,\n  address,\n  socialLinks[]{\n    platform,\n    url,\n    icon\n  }\n}": SettingsQueryResult;
+    "*[_type == \"about\"][0]": AboutQueryResult;
+    "*[_type == \"resume\"][0]{\n  \"url\": file.asset->url\n}": ResumeQueryResult;
     "*[_type == \"contact\"][0]": ContactQueryResult;
-    "*[_type == \"experience\"] | order(startYear desc) {\n  _id,\n  title,\n  company,\n  startYear,\n  endYear,\n  description,\n  url,\n  responsibilities\n}": ExperienceQueryResult;
-    "*[_type == \"media\"] | order(publishedAt desc) {\n  _id,\n  title,\n  \"imageUrl\": image.asset->url,\n  link,\n}": MediaQueryResult;
-    "*[_type == \"research\"] | order(_createdAt desc) {\n  _id,\n  title,\n  content\n}": ResearchQueryResult;
-    "*[_type == \"software\"] | order(_createdAt desc) {\n  _id,\n  title,\n  shortDescription,\n  url,\n  content\n}": SoftwareQueryResult;
+    "*[_type == \"experience\"] | order(orderRank)": ExperienceQueryResult;
+    "*[_type == \"media\"] | order(orderRank)": MediaQueryResult;
+    "*[_type == \"research\"] | order(orderRank)": ResearchQueryResult;
+    "*[_type == \"software\"] | order(orderRank)": SoftwareQueryResult;
   }
 }

@@ -1,4 +1,5 @@
 import NavigationBar from '@/app/(site)/_components/NavigationBar';
+import QueryProvider from '@/app/(site)/QueryProvider';
 import '@/app/globals.css';
 
 export const metadata = {
@@ -29,22 +30,26 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+      <QueryProvider>
+
         {/* Mobile header */}
-        <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white">
+        <div className="sm:hidden fixed top-0 left-0 right-0 z-50 bg-white">
           <NavigationBar />
         </div>
 
-        <div className="md:grid md:grid-cols-3 justify-between h-screen w-full mx-auto">
+        <div className="sm:grid grid-cols-5 justify-between h-screen w-full mx-auto">
           {/* Main content and navigation for larger screens */}
-          <main className="flex-1 overflow-auto md:col-span-2 h-full border-r border-primary border-opacity-10 pt-16 md:pt-0">
-            {children}
+          <main className="flex-1 overflow-auto col-span-3 h-full border-r border-primary border-opacity-10 pt-16 sm:pt-0">
+              {children}
           </main>
           
           {/* Desktop Navigation bar */}
-          <div className="hidden md:flex flex-col justify-center items-center">
+          <div className="hidden sm:flex flex-col justify-center items-center col-span-2">
             <NavigationBar />
           </div>
-        </div>
+          </div>
+          </QueryProvider>
+          
       </body>
     </html>
   );

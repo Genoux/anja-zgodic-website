@@ -1,4 +1,5 @@
-import { defineField, defineType } from 'sanity'
+import { defineField, defineType } from 'sanity';
+import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list';
 
 export default defineType({
   name: 'research',
@@ -14,7 +15,9 @@ export default defineType({
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [{ type: 'block' }]
+      of: [{ type: 'block' }],
     }),
+    orderRankField({ type: 'research' }), 
   ],
-})
+  orderings: [orderRankOrdering], 
+});
