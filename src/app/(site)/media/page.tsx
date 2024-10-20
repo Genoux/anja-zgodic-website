@@ -32,7 +32,7 @@ export default function MediaPage() {
     <div ref={containerRef} className="h-full overflow-auto scrollbar-blue">
       <ScrollTitle title="In The Media" containerRef={containerRef} />
       <FadeInWrapper>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 p-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-8">
           {mediaItems?.map((item) => (
             <MediaItem key={item._id} item={item} />
           ))}
