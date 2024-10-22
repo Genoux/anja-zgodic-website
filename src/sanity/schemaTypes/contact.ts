@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import { defineField, defineType } from 'sanity';
 
 export default defineType({
   name: 'contact',
@@ -9,7 +9,7 @@ export default defineType({
       name: 'email',
       title: 'Email',
       type: 'string',
-      validation: Rule => Rule.required().email()
+      validation: (Rule) => Rule.required().email(),
     }),
     defineField({
       name: 'address',
@@ -18,24 +18,22 @@ export default defineType({
       of: [{ type: 'block', options: { rows: 2 } }],
     }),
     defineField({
-      name: 'socialLinks',
-      title: 'Social Links',
-      type: 'array',
-      of: [{
-        type: 'object',
-        fields: [
-          { name: 'platform', type: 'string', title: 'Platform' },
-          { name: 'url', type: 'url', title: 'URL' },
-          {
-            name: 'icon',
-            title: 'Icon',
-            type: 'image',
-            options: {
-              accept: 'image/svg+xml'
-            }
-          }
-        ]
-      }]
-    })
-  ]
-})
+      name: 'github',
+      title: 'GitHub',
+      type: 'url',
+      validation: (Rule) => Rule.required().uri({ scheme: ['http', 'https'] }),
+    }),
+    defineField({
+      name: 'linkedin',
+      title: 'LinkedIn',
+      type: 'url',
+      validation: (Rule) => Rule.required().uri({ scheme: ['http', 'https'] }),
+    }),
+    defineField({
+      name: 'x',
+      title: 'X (Twitter)',
+      type: 'url',
+      validation: (Rule) => Rule.required().uri({ scheme: ['http', 'https'] }),
+    }),
+  ],
+});

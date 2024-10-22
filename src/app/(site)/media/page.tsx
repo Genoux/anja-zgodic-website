@@ -64,9 +64,8 @@ function MediaItem({ item }: { item: Media }) {
           )}
         </div>
 
-        {/* Title overlay on hover */}
-        <div className="absolute inset-0 backdrop-blur-sm bg-primary bg-opacity-80 text-white flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-          <h2 className="text-sm text-center px-4 font-semibold">{item.title}</h2>
+        <div className="absolute inset-0 backdrop-blur-sm bg-primary text-white flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+          <h2 className="text-sm text-center px-4 font-semibold text-background">{item.title}</h2>
         </div>
       </div>
     </a>

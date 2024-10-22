@@ -34,8 +34,12 @@ export default function SoftwarePage() {
       <ScrollTitle title="Software" containerRef={containerRef} />
       <div className="px-8">
         <FadeInWrapper>
-          {softwareItems?.map((item) => (
-            <SoftwareItem key={item._id} item={item} />
+          {softwareItems?.map((item, index) => (
+            <SoftwareItem
+              key={item._id}
+              item={item}
+              isLast={index === softwareItems.length - 1} // Pass isLast prop
+            />
           ))}
         </FadeInWrapper>
       </div>
@@ -43,15 +47,15 @@ export default function SoftwarePage() {
   );
 }
 
-function SoftwareItem({ item }: { item: Software }) {
+function SoftwareItem({ item, isLast }: { item: Software, isLast: boolean }) {
   return (
-    <div className="flex flex-col gap-4 py-8 border-b border-primary border-opacity-20">
+    <div className={`flex flex-col gap-4 py-8 ${!isLast ? 'border-b border-primary border-opacity-20' : ''}`}>
       <div className='flex flex-col gap-2'>
-      <h1 className="text-2xl font-semibold">{item.title}</h1>
-      {item.shortDescription && (
-        <p className="text-sm">{item.shortDescription}</p>
-      )}
-     </div>
+        <h1 className="text-2xl font-semibold">{item.title}</h1>
+        {item.shortDescription && (
+          <p className="text-sm">{item.shortDescription}</p>
+        )}
+      </div>
       {item.content && (
         <PortableText
           value={item.content as TypedObject[]}

@@ -1,11 +1,12 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { client } from '@/sanity/lib/client';
 import { groq } from 'next-sanity';
 import { Contact } from '@/types';
-import { urlFor } from '@/sanity/lib/image';
-import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { UrlObject } from 'url';
+
+import LinkedInIcon from '@/app/(site)/_components/icons/Linkedin';
+import XIcon from '@/app/(site)/_components/icons/XIcon';
+import GitHubIcon from '@/app/(site)/_components/icons/GitHub';
 
 const settingsQuery = groq`*[_type == "contact"][0]{
   email,
@@ -16,6 +17,19 @@ const settingsQuery = groq`*[_type == "contact"][0]{
     icon
   }
 }`;
+
+const getSocialIcon = (platform: string | undefined) => {
+  switch (platform?.toLowerCase()) {
+    case 'github':
+      return <GitHubIcon className="w-6 h-6" />;
+    case 'linkedin':
+      return <LinkedInIcon className="w-6 h-6" />;
+    case 'x':
+      return <XIcon className="w-6 h-6" />;
+    default:
+      return null;
+  }
+};
 
 async function getSiteSettings(): Promise<Contact> {
   return await client.fetch(settingsQuery);
@@ -37,17 +51,14 @@ export default async function Home() {
         </div>
         </div>
         <div className="flex space-x-4">
-          {contact.socialLinks?.map((link: { url?: string | UrlObject; icon?: SanityImageSource; platform?: string; _key: string }) => (
-            <Link key={link._key} href={link.url || '#'} className="text-primary hover:text-primary-dark transition-colors duration-300">
-              {link.icon && (
-                <Image
-                  src={urlFor(link.icon).url()}
-                  alt={link.platform || "Icon"}
-                  width={24}
-                  height={24}
-                  className="text-primary"
-                />
-              )}
+          {contact.socialLinks?.map((link: { url?: string | UrlObject; platform?: string; _key: string }) => (
+            <Link
+              key={link._key}
+              href={link.url || '#'}
+              className="text-primary hover:text-primary-dark transition-colors duration-300"
+              aria-label={link.platform}
+            >
+              {getSocialIcon(link.platform)}
             </Link>
           ))}
         </div>

@@ -62,19 +62,20 @@ export default function ResearchPage() {
             ) : (
               'CV'
             )}
-  
           </p>
         </div>
-        {researchItems?.map((item: Research) => (
+        {researchItems?.map((item: Research, index) => (
           <div key={item._id} className="px-8">
-            <ResearchItem item={item} />
+            <ResearchItem 
+              item={item} 
+              isLast={index === researchItems.length - 1}
+            />
           </div>
         ))}
       </FadeInWrapper>
     </div>
   );
 }
-
 
 const URL = {
   types: {},
@@ -91,9 +92,9 @@ const URL = {
   },
 };
 
-function ResearchItem({ item }: { item: Research }) {
+function ResearchItem({ item, isLast }: { item: Research, isLast: boolean }) {
   return (
-    <div className="flex flex-col py-8 border-b border-primary border-opacity-20">
+    <div className={`flex flex-col py-8 ${!isLast ? 'border-b border-primary border-opacity-20' : ''}`}>
       <h2 className="text-2xl font-semibold mb-6">{item.title}</h2>
       {item.content && (
         <PortableText value={item.content as TypedObject[]} components={URL} />

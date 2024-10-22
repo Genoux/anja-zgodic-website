@@ -16,11 +16,6 @@
   font-style: normal;
 }
 
-:root {
-  --primary: #2742CB; /* Default fallback */
-  --background: #D5DFE2; /* Default fallback */
-}
-
 body {
   background: var(--background);
   color: var(--primary);
