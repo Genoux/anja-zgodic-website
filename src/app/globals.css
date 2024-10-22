@@ -17,11 +17,9 @@
 }
 
 :root {
-  --background: #D5DFE2;
-  --primary: #2742CB;
-  --primary-50: rgba(39, 66, 203, 0.5);
+  --primary: #2742CB; /* Default fallback */
+  --background: #D5DFE2; /* Default fallback */
 }
-
 
 body {
   background: var(--background);
@@ -29,15 +27,24 @@ body {
   font-family: 'DINOT', Arial, Helvetica, sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Scrollbar */
+.scrollbar-blue {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--background);
 }
 
-.disable-interaction {
-  pointer-events: none;
-  cursor: pointer
+.scrollbar-blue::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-blue::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+.scrollbar-blue::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 20px;
+  border: 3px solid var(--background);
 }
 
 @layer components {
@@ -46,32 +53,14 @@ body {
   }
 }
 
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
 
 code {
-  @apply text-sm;
-  background-color: var(--primary-50);
+  background-color: var(--primary);
   color: var(--background);
   padding: 0 5px;
-}
-
-/* Scrollbar */
-/* app/globals.css or your preferred global CSS file */
-
-.scrollbar-blue {
-  scrollbar-width: thin;
-  scrollbar-color: #2742CB #2742cb26;
-}
-
-.scrollbar-blue::-webkit-scrollbar {
-  width: 8px;
-}
-
-.scrollbar-blue::-webkit-scrollbar-track {
-  background: #f3f4f6;
-}
-
-.scrollbar-blue::-webkit-scrollbar-thumb {
-  background-color: #2742CB;
-  border-radius: 20px;
-  border: 3px solid #f3f4f6;
 }

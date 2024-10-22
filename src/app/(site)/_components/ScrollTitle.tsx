@@ -43,7 +43,8 @@ export default function ScrollTitle({
 
   return (
     <motion.h1
-      className="backdrop-blur-md bg-opacity-80 text-primary border-b border-primary border-opacity-10 font-bold sticky top-0 z-10 bg-secondary px-8 py-2"
+      
+      className="backdrop-blur-md bg-background bg-opacity-80 text-primary border-b border-primary border-opacity-10 font-bold sticky top-0 z-10 bg-secondary px-8 py-2"
       style={{ fontSize: `${fontSizeValue}rem` }}
       animate={{
         fontSize: `${fontSizeValue}rem`,

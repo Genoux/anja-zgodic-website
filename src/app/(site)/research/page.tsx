@@ -11,6 +11,7 @@ import { Loader } from '@/app/(site)/_components/Loader';
 import { PortableText } from '@portabletext/react';
 import { TypedObject } from '@portabletext/types';
 import { PortableTextMarkComponentProps } from '@portabletext/react';
+import Link from 'next/link';
 
 const researchQuery = groq`*[_type == "research"] | order(orderRank)`;
 
@@ -43,25 +44,25 @@ export default function ResearchPage() {
   if (error) return <div>Error loading research data.</div>;
 
   return (
-    <div ref={containerRef} className="h-full overflow-auto scrollbar-blue flex flex-col">
-      <ScrollTitle title="Research" containerRef={containerRef} />
+    <div ref={containerRef as React.RefObject<HTMLDivElement>} className="h-full overflow-auto scrollbar-blue flex flex-col">
+      <ScrollTitle title="Research" containerRef={containerRef as React.RefObject<HTMLDivElement>} />
       <FadeInWrapper>
         <div className='px-8 py-4 font-semibold text-sm bg-primary bg-opacity-10'>
-          <p>
+          <p className='text-background '>
             A complete list of published work can be seen in my{' '}
             {resume?.url ? (
-              <a
+              <Link
                 href={resume.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary underline"
+                className="text-background underline"
               >
                 CV
-              </a>
+              </Link>
             ) : (
               'CV'
             )}
-            .
+  
           </p>
         </div>
         {researchItems?.map((item: Research) => (
@@ -73,6 +74,7 @@ export default function ResearchPage() {
     </div>
   );
 }
+
 
 const URL = {
   types: {},
