@@ -12,7 +12,7 @@ export default defineType({
       title: 'Title',
       type: 'string',
       initialValue: 'Anja Zgodic CV',
-      readOnly: true,  // Singleton means you won't create multiple
+      readOnly: true, // Singleton means you won't create multiple
     }),
     defineField({
       name: 'file',

@@ -21,7 +21,7 @@ const resumeQuery = groq`*[_type == "resume"][0]{
 }`;
 
 async function fetchResearch(): Promise<Research[]> {
-  return await client.fetch(researchQuery) as Research[];
+  return (await client.fetch(researchQuery)) as Research[];
 }
 
 async function fetchResume() {
@@ -30,7 +30,11 @@ async function fetchResume() {
 
 export default function ResearchPage() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { data: researchItems, isLoading, error } = useQuery({
+  const {
+    data: researchItems,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['research'],
     queryFn: fetchResearch,
   });
@@ -44,11 +48,17 @@ export default function ResearchPage() {
   if (error) return <div>Error loading research data.</div>;
 
   return (
-    <div ref={containerRef as React.RefObject<HTMLDivElement>} className="h-full overflow-auto scrollbar-blue flex flex-col">
-      <ScrollTitle title="Research" containerRef={containerRef as React.RefObject<HTMLDivElement>} />
+    <div
+      ref={containerRef as React.RefObject<HTMLDivElement>}
+      className="h-full overflow-auto scrollbar-blue flex flex-col"
+    >
+      <ScrollTitle
+        title="Research"
+        containerRef={containerRef as React.RefObject<HTMLDivElement>}
+      />
       <FadeInWrapper>
-        <div className='px-8 py-4 font-semibold text-sm bg-primary bg-opacity-10'>
-          <p className='text-background '>
+        <div className="px-8 py-4 font-semibold text-sm bg-primary bg-opacity-10">
+          <p className="text-background ">
             A complete list of published work can be seen in my{' '}
             {resume?.url ? (
               <Link
@@ -66,8 +76,8 @@ export default function ResearchPage() {
         </div>
         {researchItems?.map((item: Research, index) => (
           <div key={item._id} className="px-8">
-            <ResearchItem 
-              item={item} 
+            <ResearchItem
+              item={item}
               isLast={index === researchItems.length - 1}
             />
           </div>
@@ -80,11 +90,19 @@ export default function ResearchPage() {
 const URL = {
   types: {},
   marks: {
-    link: ({ value, children }: PortableTextMarkComponentProps<{ href: string; _type: string }>) => {
+    link: ({
+      value,
+      children,
+    }: PortableTextMarkComponentProps<{ href: string; _type: string }>) => {
       const target = value?.href.startsWith('http') ? '_blank' : undefined;
       const rel = target === '_blank' ? 'noopener noreferrer' : undefined;
       return (
-        <a href={value?.href} target={target} rel={rel} className="text-primary underline">
+        <a
+          href={value?.href}
+          target={target}
+          rel={rel}
+          className="text-primary underline"
+        >
           {children}
         </a>
       );
@@ -92,9 +110,11 @@ const URL = {
   },
 };
 
-function ResearchItem({ item, isLast }: { item: Research, isLast: boolean }) {
+function ResearchItem({ item, isLast }: { item: Research; isLast: boolean }) {
   return (
-    <div className={`flex flex-col py-8 ${!isLast ? 'border-b border-primary border-opacity-20' : ''}`}>
+    <div
+      className={`flex flex-col py-8 ${!isLast ? 'border-b border-primary border-opacity-20' : ''}`}
+    >
       <h2 className="text-2xl font-semibold mb-6">{item.title}</h2>
       {item.content && (
         <PortableText value={item.content as TypedObject[]} components={URL} />

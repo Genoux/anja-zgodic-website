@@ -15,10 +15,15 @@ function getRandomPalette() {
 
 export const metadata = {
   title: 'Anja Zgodic',
-  description: 'Anja Zgodic is a software engineer and data scientist based in the United States.',
+  description:
+    'Anja Zgodic is a software engineer and data scientist based in the United States.',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const palette = getRandomPalette();
 
   return (

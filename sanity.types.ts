@@ -14,7 +14,7 @@
 
 // Source: schema.json
 export type SanityImagePaletteSwatch = {
-  _type: "sanity.imagePaletteSwatch";
+  _type: 'sanity.imagePaletteSwatch';
   background?: string;
   foreground?: string;
   population?: number;
@@ -22,7 +22,7 @@ export type SanityImagePaletteSwatch = {
 };
 
 export type SanityImagePalette = {
-  _type: "sanity.imagePalette";
+  _type: 'sanity.imagePalette';
   darkMuted?: SanityImagePaletteSwatch;
   lightVibrant?: SanityImagePaletteSwatch;
   darkVibrant?: SanityImagePaletteSwatch;
@@ -33,14 +33,14 @@ export type SanityImagePalette = {
 };
 
 export type SanityImageDimensions = {
-  _type: "sanity.imageDimensions";
+  _type: 'sanity.imageDimensions';
   height?: number;
   width?: number;
   aspectRatio?: number;
 };
 
 export type Geopoint = {
-  _type: "geopoint";
+  _type: 'geopoint';
   lat?: number;
   lng?: number;
   alt?: number;
@@ -48,7 +48,7 @@ export type Geopoint = {
 
 export type Resume = {
   _id: string;
-  _type: "resume";
+  _type: 'resume';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -56,18 +56,18 @@ export type Resume = {
   file?: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.fileAsset';
     };
-    _type: "file";
+    _type: 'file';
   };
   updatedAt?: string;
 };
 
 export type SanityFileAsset = {
   _id: string;
-  _type: "sanity.fileAsset";
+  _type: 'sanity.fileAsset';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -89,7 +89,7 @@ export type SanityFileAsset = {
 
 export type About = {
   _id: string;
-  _type: "about";
+  _type: 'about';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -98,25 +98,25 @@ export type About = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
 };
 
 export type Contact = {
   _id: string;
-  _type: "contact";
+  _type: 'contact';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -125,18 +125,18 @@ export type Contact = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
   socialLinks?: Array<{
@@ -145,13 +145,13 @@ export type Contact = {
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      _type: "image";
+      _type: 'image';
     };
     _key: string;
   }>;
@@ -159,7 +159,7 @@ export type Contact = {
 
 export type Media = {
   _id: string;
-  _type: "media";
+  _type: 'media';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -167,20 +167,20 @@ export type Media = {
   image?: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: "image";
+    _type: 'image';
   };
   link?: string;
   orderRank?: string;
 };
 
 export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
+  _type: 'sanity.imageCrop';
   top?: number;
   bottom?: number;
   left?: number;
@@ -188,7 +188,7 @@ export type SanityImageCrop = {
 };
 
 export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
+  _type: 'sanity.imageHotspot';
   x?: number;
   y?: number;
   height?: number;
@@ -197,7 +197,7 @@ export type SanityImageHotspot = {
 
 export type SanityImageAsset = {
   _id: string;
-  _type: "sanity.imageAsset";
+  _type: 'sanity.imageAsset';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -219,14 +219,14 @@ export type SanityImageAsset = {
 };
 
 export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
+  _type: 'sanity.assetSourceData';
   name?: string;
   id?: string;
   url?: string;
 };
 
 export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
+  _type: 'sanity.imageMetadata';
   location?: Geopoint;
   dimensions?: SanityImageDimensions;
   palette?: SanityImagePalette;
@@ -238,7 +238,7 @@ export type SanityImageMetadata = {
 
 export type Experience = {
   _id: string;
-  _type: "experience";
+  _type: 'experience';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -254,7 +254,7 @@ export type Experience = {
 
 export type Software = {
   _id: string;
-  _type: "software";
+  _type: 'software';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -265,18 +265,18 @@ export type Software = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal";
-    listItem?: "bullet" | "number";
+    style?: 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
   orderRank?: string;
@@ -284,7 +284,7 @@ export type Software = {
 
 export type Research = {
   _id: string;
-  _type: "research";
+  _type: 'research';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -293,18 +293,18 @@ export type Research = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
   orderRank?: string;
@@ -312,7 +312,7 @@ export type Research = {
 
 export type MediaTag = {
   _id: string;
-  _type: "media.tag";
+  _type: 'media.tag';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -320,12 +320,31 @@ export type MediaTag = {
 };
 
 export type Slug = {
-  _type: "slug";
+  _type: 'slug';
   current?: string;
   source?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | Resume | SanityFileAsset | About | Contact | Media | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Experience | Software | Research | MediaTag | Slug;
+export type AllSanitySchemaTypes =
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | Geopoint
+  | Resume
+  | SanityFileAsset
+  | About
+  | Contact
+  | Media
+  | SanityImageCrop
+  | SanityImageHotspot
+  | SanityImageAsset
+  | SanityAssetSourceData
+  | SanityImageMetadata
+  | Experience
+  | Software
+  | Research
+  | MediaTag
+  | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/app/(site)/page.tsx
 // Variable: settingsQuery
@@ -336,18 +355,18 @@ export type SettingsQueryResult = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }> | null;
   socialLinks: Array<{
@@ -356,13 +375,13 @@ export type SettingsQueryResult = {
     icon: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      _type: "image";
+      _type: 'image';
     } | null;
   }> | null;
 } | null;
@@ -372,7 +391,7 @@ export type SettingsQueryResult = {
 // Query: *[_type == "about"][0]
 export type AboutQueryResult = {
   _id: string;
-  _type: "about";
+  _type: 'about';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -381,18 +400,18 @@ export type AboutQueryResult = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
 } | null;
@@ -409,7 +428,7 @@ export type ResumeQueryResult = {
 // Query: *[_type == "contact"][0]
 export type ContactQueryResult = {
   _id: string;
-  _type: "contact";
+  _type: 'contact';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -418,18 +437,18 @@ export type ContactQueryResult = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
   socialLinks?: Array<{
@@ -438,13 +457,13 @@ export type ContactQueryResult = {
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      _type: "image";
+      _type: 'image';
     };
     _key: string;
   }>;
@@ -455,7 +474,7 @@ export type ContactQueryResult = {
 // Query: *[_type == "experience"] | order(orderRank)
 export type ExperienceQueryResult = Array<{
   _id: string;
-  _type: "experience";
+  _type: 'experience';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -474,7 +493,7 @@ export type ExperienceQueryResult = Array<{
 // Query: *[_type == "media"] | order(orderRank)
 export type MediaQueryResult = Array<{
   _id: string;
-  _type: "media";
+  _type: 'media';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -482,13 +501,13 @@ export type MediaQueryResult = Array<{
   image?: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: "image";
+    _type: 'image';
   };
   link?: string;
   orderRank?: string;
@@ -499,7 +518,7 @@ export type MediaQueryResult = Array<{
 // Query: *[_type == "research"] | order(orderRank)
 export type ResearchQueryResult = Array<{
   _id: string;
-  _type: "research";
+  _type: 'research';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -508,18 +527,18 @@ export type ResearchQueryResult = Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
   orderRank?: string;
@@ -530,7 +549,7 @@ export type ResearchQueryResult = Array<{
 // Query: *[_type == "software"] | order(orderRank)
 export type SoftwareQueryResult = Array<{
   _id: string;
-  _type: "software";
+  _type: 'software';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -541,34 +560,34 @@ export type SoftwareQueryResult = Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal";
-    listItem?: "bullet" | "number";
+    style?: 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
   orderRank?: string;
 }>;
 
 // Query TypeMap
-import "@sanity/client";
-declare module "@sanity/client" {
+import '@sanity/client';
+declare module '@sanity/client' {
   interface SanityQueries {
-    "*[_type == \"contact\"][0]{\n  email,\n  address,\n  socialLinks[]{\n    platform,\n    url,\n    icon\n  }\n}": SettingsQueryResult;
-    "*[_type == \"about\"][0]": AboutQueryResult;
-    "*[_type == \"resume\"][0]{\n  \"url\": file.asset->url\n}": ResumeQueryResult;
-    "*[_type == \"contact\"][0]": ContactQueryResult;
-    "*[_type == \"experience\"] | order(orderRank)": ExperienceQueryResult;
-    "*[_type == \"media\"] | order(orderRank)": MediaQueryResult;
-    "*[_type == \"research\"] | order(orderRank)": ResearchQueryResult;
-    "*[_type == \"software\"] | order(orderRank)": SoftwareQueryResult;
+    '*[_type == "contact"][0]{\n  email,\n  address,\n  socialLinks[]{\n    platform,\n    url,\n    icon\n  }\n}': SettingsQueryResult;
+    '*[_type == "about"][0]': AboutQueryResult;
+    '*[_type == "resume"][0]{\n  "url": file.asset->url\n}': ResumeQueryResult;
+    '*[_type == "contact"][0]': ContactQueryResult;
+    '*[_type == "experience"] | order(orderRank)': ExperienceQueryResult;
+    '*[_type == "media"] | order(orderRank)': MediaQueryResult;
+    '*[_type == "research"] | order(orderRank)': ResearchQueryResult;
+    '*[_type == "software"] | order(orderRank)': SoftwareQueryResult;
   }
 }

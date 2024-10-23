@@ -10,20 +10,12 @@ export const structure: StructureResolver = (S, context) =>
       S.listItem()
         .title('About')
         .icon(DesktopIcon)
-        .child(
-          S.editor()
-            .id('about')
-            .schemaType('about')
-            .documentId('about')
-        ),
+        .child(S.editor().id('about').schemaType('about').documentId('about')),
       S.listItem()
         .title('Contact')
         .icon(DesktopIcon)
         .child(
-          S.editor()
-            .id('contact')
-            .schemaType('contact')
-            .documentId('contact')
+          S.editor().id('contact').schemaType('contact').documentId('contact')
         ),
       S.divider(),
       orderableDocumentListDeskItem({
@@ -55,11 +47,7 @@ export const structure: StructureResolver = (S, context) =>
         icon: DocumentIcon,
       }),
       S.divider(),
-      S.listItem()
-      .title('Resume')
-      .child(
-        S.editor()
-          .schemaType('resume')
-          .documentId('resume') // Ensures only one CV can exist
+      S.listItem().title('Resume').child(
+        S.editor().schemaType('resume').documentId('resume') // Ensures only one CV can exist
       ),
     ]);

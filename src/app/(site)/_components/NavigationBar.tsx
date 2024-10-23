@@ -46,9 +46,25 @@ const NavigationBar = () => {
         <Link href={'/'}>
           <h1 className="text-2xl font-bold text-background">AZ</h1>
         </Link>
-        <button className="relative w-8 h-8 focus:outline-none" onClick={toggleMenu} aria-label="Toggle menu">
-          <Menu className={clsx("absolute inset-0 transition-opacity duration-300 text-background", { 'opacity-0': menuOpen, 'opacity-100': !menuOpen })} size={28} />
-          <X className={clsx("absolute inset-0 transition-opacity duration-300 text-background", { 'opacity-100': menuOpen, 'opacity-0': !menuOpen })} size={28} />
+        <button
+          className="relative w-8 h-8 focus:outline-none"
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
+          <Menu
+            className={clsx(
+              'absolute inset-0 transition-opacity duration-300 text-background',
+              { 'opacity-0': menuOpen, 'opacity-100': !menuOpen }
+            )}
+            size={28}
+          />
+          <X
+            className={clsx(
+              'absolute inset-0 transition-opacity duration-300 text-background',
+              { 'opacity-100': menuOpen, 'opacity-0': !menuOpen }
+            )}
+            size={28}
+          />
         </button>
       </header>
 
@@ -60,7 +76,7 @@ const NavigationBar = () => {
                 key={item.name}
                 href={item.href}
                 className={clsx(
-                  "text-lg font-bold p-2 w-full hover:opacity-75 transition-all duration-200 ease-in-out",
+                  'text-lg font-bold p-2 w-full hover:opacity-75 transition-all duration-200 ease-in-out',
                   { 'opacity-50': pathname === item.href } // Active state for mobile
                 )}
                 onClick={toggleMenu}
@@ -71,7 +87,7 @@ const NavigationBar = () => {
             <Link
               href={resume?.url || ''}
               className="mt-4 border border-secondary text-secondary px-4 py-2 font-bold hover:bg-background hover:text-primary transition-all duration-200 ease-in-out"
-              target='_blank'
+              target="_blank"
             >
               DOWNLOAD RESUME
             </Link>
@@ -85,7 +101,9 @@ const NavigationBar = () => {
           {!isHomePage && (
             <Link href="/">
               <h1 className="text-primary text-4xl font-bold mb-4 leading-[92%]">
-                ANJA<br />ZGODIC
+                ANJA
+                <br />
+                ZGODIC
               </h1>
             </Link>
           )}
@@ -94,9 +112,10 @@ const NavigationBar = () => {
               key={item.name}
               href={item.href}
               className={clsx(
-                "bg-primary w-full text-background px-4 py-3 text-sm text-left transition-all duration-125 ease-in-out border border-primary hover:bg-background hover:text-primary hover:w-[105%]",
+                'bg-primary w-full text-background px-4 py-3 text-sm text-left transition-all duration-125 ease-in-out border border-primary hover:bg-background hover:text-primary hover:w-[105%]',
                 {
-                  'bg-transparent text-primary px-6 w-[110%] cursor-auto pointer-events-none': pathname === item.href,
+                  'bg-transparent text-primary px-6 w-[110%] cursor-auto pointer-events-none':
+                    pathname === item.href,
                   'w-full': pathname !== item.href,
                 }
               )}
@@ -104,7 +123,11 @@ const NavigationBar = () => {
               {item.name}
             </Link>
           ))}
-          <Link target='_blank' href={resume?.url || ''} className="border border-primary text-primary w-full px-6 py-4 text-sm text-center font-bold hover:bg-primary hover:text-background transition-all duration-125 ease-in-out">
+          <Link
+            target="_blank"
+            href={resume?.url || ''}
+            className="border border-primary text-primary w-full px-6 py-4 text-sm text-center font-bold hover:bg-primary hover:text-background transition-all duration-125 ease-in-out"
+          >
             DOWNLOAD RESUME
           </Link>
         </div>

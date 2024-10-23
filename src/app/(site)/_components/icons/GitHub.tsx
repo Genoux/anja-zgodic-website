@@ -4,7 +4,11 @@ interface GitHubIconProps {
   height?: number;
 }
 
-const GitHubIcon: React.FC<GitHubIconProps> = ({ className = '', width = 24, height = 24 }) => (
+const GitHubIcon: React.FC<GitHubIconProps> = ({
+  className = '',
+  width = 24,
+  height = 24,
+}) => (
   <svg
     className={className}
     width={width}

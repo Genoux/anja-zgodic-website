@@ -15,13 +15,17 @@ import Link from 'next/link';
 const softwareQuery = groq`*[_type == "software"] | order(orderRank)`;
 
 async function fetchSoftware(): Promise<Software[]> {
-  return await client.fetch(softwareQuery) as Software[];
+  return (await client.fetch(softwareQuery)) as Software[];
 }
 
 export default function SoftwarePage() {
-  const { data: softwareItems, isLoading, error } = useQuery({
+  const {
+    data: softwareItems,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['software'],
-    queryFn: fetchSoftware
+    queryFn: fetchSoftware,
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,10 +51,12 @@ export default function SoftwarePage() {
   );
 }
 
-function SoftwareItem({ item, isLast }: { item: Software, isLast: boolean }) {
+function SoftwareItem({ item, isLast }: { item: Software; isLast: boolean }) {
   return (
-    <div className={`flex flex-col gap-4 py-8 ${!isLast ? 'border-b border-primary border-opacity-20' : ''}`}>
-      <div className='flex flex-col gap-2'>
+    <div
+      className={`flex flex-col gap-4 py-8 ${!isLast ? 'border-b border-primary border-opacity-20' : ''}`}
+    >
+      <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold">{item.title}</h1>
         {item.shortDescription && (
           <p className="text-sm">{item.shortDescription}</p>
@@ -63,13 +69,22 @@ function SoftwareItem({ item, isLast }: { item: Software, isLast: boolean }) {
             types: {},
             marks: {
               link: ({ value, children }) => (
-                <Link href={value.href} className='text-primary underline' target="_blank" rel="noopener noreferrer">
+                <Link
+                  href={value.href}
+                  className="text-primary underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {children}
                 </Link>
               ),
             },
             block: {
-              normal: ({ children }) => <p className='text-base opacity-90 tracking-wide leading-6'>{children}</p>,
+              normal: ({ children }) => (
+                <p className="text-base opacity-90 tracking-wide leading-6">
+                  {children}
+                </p>
+              ),
             },
           }}
         />

@@ -26,7 +26,7 @@ const contactQuery = groq`*[_type == "contact"][0]{
 }`;
 
 async function fetchContact(): Promise<Contact> {
-  return await client.fetch(contactQuery) as Contact;
+  return (await client.fetch(contactQuery)) as Contact;
 }
 
 const getSocialIcon = (platform: string | undefined) => {
@@ -43,9 +43,13 @@ const getSocialIcon = (platform: string | undefined) => {
 };
 
 export default function ContactPage() {
-  const { data: contact, isLoading, error } = useQuery({
+  const {
+    data: contact,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['contact'],
-    queryFn: fetchContact
+    queryFn: fetchContact,
   });
 
   if (isLoading) return <Loader />;
@@ -55,25 +59,36 @@ export default function ContactPage() {
     <FadeInWrapper>
       <div className="h-screen flex justify-center">
         <div className="w-full flex flex-col items-center md:p-8 justify-center gap-2 -mt-16 sm:-mt-0">
-          <h1 className="text-primary text-5xl font-bold mb-6 text-center sm:text-left">Contact</h1>
+          <h1 className="text-primary text-5xl font-bold mb-6 text-center sm:text-left">
+            Contact
+          </h1>
           <div className="flex flex-col w-fit items-center sm:items-start justify-center gap-6">
             <div className="prose prose-blue w-fit">
               {contact?.address && <PortableText value={contact.address} />}
             </div>
-            <Link href={`mailto:${contact?.email}`} className="text-primary hover:underline">
+            <Link
+              href={`mailto:${contact?.email}`}
+              className="text-primary hover:underline"
+            >
               {contact?.email}
             </Link>
             <div className="flex space-x-4">
-            {contact?.socialLinks?.map((link: { url?: string | UrlObject; platform?: string; _key: string }) => (
-            <Link
-              key={link._key}
-              href={link.url || '#'}
-              className="text-primary hover:text-primary-dark transition-colors duration-300"
-              aria-label={link.platform}
-            >
-              {getSocialIcon(link.platform)}
-            </Link>
-          ))}
+              {contact?.socialLinks?.map(
+                (link: {
+                  url?: string | UrlObject;
+                  platform?: string;
+                  _key: string;
+                }) => (
+                  <Link
+                    key={link._key}
+                    href={link.url || '#'}
+                    className="text-primary hover:text-primary-dark transition-colors duration-300"
+                    aria-label={link.platform}
+                  >
+                    {getSocialIcon(link.platform)}
+                  </Link>
+                )
+              )}
             </div>
           </div>
         </div>
