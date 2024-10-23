@@ -10,7 +10,7 @@ const palettes = [
 ];
 
 function getRandomPalette() {
-  return palettes[Math.floor(Math.random() * palettes.length)];
+  return Math.floor(Math.random() * palettes.length);
 }
 
 export const metadata = {
@@ -24,7 +24,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const palette = getRandomPalette();
+  const paletteIndex = getRandomPalette();
+  const palette = palettes[paletteIndex];
 
   return (
     <html lang="en">
@@ -35,13 +36,14 @@ export default function RootLayout({
             --background: ${palette.background};
           }
         `}</style>
+        <link rel="icon" href={`/favicon-primary1.ico`} />
       </head>
       <body>
         <QueryProvider>
           <div className="sm:hidden fixed top-0 left-0 right-0 z-50 bg-white">
             <NavigationBar />
           </div>
-          <ClientWrapper>
+          <ClientWrapper paletteIndex={paletteIndex}>
             <main className="flex-1 overflow-auto col-span-3 h-full border-r border-primary border-opacity-10 pt-16 sm:pt-0">
               {children}
             </main>
