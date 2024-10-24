@@ -1,11 +1,11 @@
 'use client';
-
 import { motion } from 'framer-motion';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+import { palettes } from './constants';
 
 interface ClientWrapperProps {
   children: ReactNode;
-  paletteIndex: number;
+  initialPaletteIndex: number;
 }
 
 function updateFavicon(paletteIndex: number) {
@@ -15,10 +15,30 @@ function updateFavicon(paletteIndex: number) {
   }
 }
 
-export default function ClientWrapper({ children, paletteIndex }: ClientWrapperProps) {
+export default function ClientWrapper({ 
+  children, 
+  initialPaletteIndex 
+}: ClientWrapperProps) {
+  const [paletteIndex, setPaletteIndex] = useState(initialPaletteIndex);
+  console.log('Palette Index', paletteIndex);
+
   useEffect(() => {
-    updateFavicon(paletteIndex);
-  }, [paletteIndex]);
+    // Check session storage on mount
+    const sessionPalette = sessionStorage.getItem('paletteIndex');
+    if (sessionPalette !== null) {
+      const storedIndex = parseInt(sessionPalette);
+      setPaletteIndex(storedIndex);
+      
+      // Update CSS variables
+      document.documentElement.style.setProperty('--primary', palettes[storedIndex].primary);
+      document.documentElement.style.setProperty('--background', palettes[storedIndex].background);
+    } else {
+      // Store the initial palette index
+      sessionStorage.setItem('paletteIndex', initialPaletteIndex.toString());
+    }
+    
+    updateFavicon(sessionPalette ? parseInt(sessionPalette) : initialPaletteIndex);
+  }, [initialPaletteIndex]);
 
   return (
     <motion.div

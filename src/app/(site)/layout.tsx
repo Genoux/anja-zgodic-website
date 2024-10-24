@@ -1,13 +1,8 @@
 import NavigationBar from '@/app/(site)/_components/NavigationBar';
 import QueryProvider from '@/app/(site)/QueryProvider';
 import ClientWrapper from '@/app/(site)/ClientWrapper';
+import { palettes } from './constants';
 import '@/app/globals.css';
-
-const palettes = [
-  { primary: '#C6D5E2', background: '#7199AC' },
-  { primary: '#9EE9FF', background: '#449BD1' },
-  { primary: '#378769', background: '#D1E6CA' },
-];
 
 function getRandomPalette() {
   return Math.floor(Math.random() * palettes.length);
@@ -15,8 +10,7 @@ function getRandomPalette() {
 
 export const metadata = {
   title: 'Anja Zgodic',
-  description:
-    'Anja Zgodic is a software engineer and data scientist based in the United States.',
+  description: 'Anja Zgodic is a software engineer and data scientist based in the United States.',
 };
 
 export default function RootLayout({
@@ -24,8 +18,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const paletteIndex = getRandomPalette();
-  const palette = palettes[paletteIndex];
+  const initialPaletteIndex = getRandomPalette();
+  const palette = palettes[initialPaletteIndex];
 
   return (
     <html lang="en">
@@ -43,7 +37,7 @@ export default function RootLayout({
           <div className="sm:hidden fixed top-0 left-0 right-0 z-50 bg-white">
             <NavigationBar />
           </div>
-          <ClientWrapper paletteIndex={paletteIndex}>
+          <ClientWrapper initialPaletteIndex={initialPaletteIndex}>
             <main className="flex-1 overflow-auto col-span-3 h-full border-r border-primary border-opacity-10 pt-16 sm:pt-0">
               {children}
             </main>
