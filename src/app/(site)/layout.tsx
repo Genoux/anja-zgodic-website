@@ -10,7 +10,7 @@ function getRandomPalette() {
 
 export const metadata = {
   title: 'Anja Zgodic',
-  description: 'Anja Zgodic is a software engineer and data scientist based in the United States.',
+  description: 'Anja Zgodic is a software engineer and data scientist based in the United States.'
 };
 
 export default function RootLayout({
@@ -30,7 +30,21 @@ export default function RootLayout({
             --background: ${palette.background};
           }
         `}</style>
-        <link rel="icon" href={`/favicon-primary1.ico`} />
+        <link rel="icon" href={`/favicon-primary${initialPaletteIndex + 1}.ico`} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const stored = sessionStorage.getItem('paletteIndex');
+                if (stored !== null) {
+                  const palette = ${JSON.stringify(palettes)}[parseInt(stored)];
+                  document.documentElement.style.setProperty('--primary', palette.primary);
+                  document.documentElement.style.setProperty('--background', palette.background);
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
       </head>
       <body>
         <QueryProvider>
