@@ -34,14 +34,21 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              try {
-                const stored = sessionStorage.getItem('paletteIndex');
-                if (stored !== null) {
-                  const palette = ${JSON.stringify(palettes)}[parseInt(stored)];
-                  document.documentElement.style.setProperty('--primary', palette.primary);
-                  document.documentElement.style.setProperty('--background', palette.background);
+              (function() {
+                try {
+                  const stored = sessionStorage.getItem('paletteIndex');
+                  if (stored !== null) {
+                    const palettes = ${JSON.stringify(palettes)};
+                    const palette = palettes[parseInt(stored)];
+                    if (palette) {
+                      document.documentElement.style.setProperty('--primary', palette.primary);
+                      document.documentElement.style.setProperty('--background', palette.background);
+                    }
+                  }
+                } catch (e) {
+                  console.error('Error setting initial palette:', e);
                 }
-              } catch (e) {}
+              })();
             `,
           }}
         />
