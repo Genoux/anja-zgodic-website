@@ -100,7 +100,7 @@ export default function ClientWrapper({
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, delay: 0.1 }}
-      className="sm:grid grid-cols-5 justify-between h-screen w-full mx-auto"
+      className="sm:grid grid-cols-6 justify-between h-screen w-full mx-auto"
     >
       {children}
       {process.env.NODE_ENV === 'development' && <DevPaletteSelector />}

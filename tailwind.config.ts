@@ -8,8 +8,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--primary)', // Uses the CSS variable for dynamic primary color
-        background: 'var(--background)', // Uses the CSS variable for dynamic background color
+        primary: 'var(--primary)',
+        background: 'var(--background)',
       },
     },
   },

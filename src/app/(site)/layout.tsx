@@ -35,7 +35,7 @@ export default function RootLayout({
             <NavigationBar />
           </div>
           <ClientWrapper>
-            <main className="flex-1 overflow-auto col-span-3 h-full border-r border-primary border-opacity-10 pt-16 sm:pt-0">
+            <main className="flex-1 overflow-auto col-span-4 h-full border-r border-primary border-opacity-10 pt-16 sm:pt-0">
               {children}
             </main>
             <div className="hidden sm:flex flex-col justify-center items-center col-span-2">

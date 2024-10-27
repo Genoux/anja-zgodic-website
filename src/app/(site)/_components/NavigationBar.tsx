@@ -86,7 +86,7 @@ const NavigationBar = () => {
             ))}
             <Link
               href={resume?.url || ''}
-              className="mt-4 border border-secondary text-secondary px-4 py-2 font-bold hover:bg-background hover:text-primary transition-all duration-200 ease-in-out"
+              className="mt-4 border border-secondary text-secondary px-4 py-2 font-bold hover:bg-background hover:text-primary transition-all duration-200 ease-in-out border-background"
               target="_blank"
             >
               DOWNLOAD RESUME
