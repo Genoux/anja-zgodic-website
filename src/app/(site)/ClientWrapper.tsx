@@ -87,10 +87,12 @@ export default function ClientWrapper({
       console.error('Session storage error:', e);
     }
 
+    // Always update styles and favicon
     updatePaletteStyles(finalIndex);
     updateFavicon(finalIndex);
   }, []);
 
+  // Effect to handle palette changes
   useEffect(() => {
     if (mounted) {
       updatePaletteStyles(paletteIndex);
@@ -106,7 +108,7 @@ export default function ClientWrapper({
       className="sm:grid grid-cols-5 justify-between h-screen w-full mx-auto"
     >
       {children}
-      {process.env.NODE_ENV === 'development' && <DevPaletteSelector />}
+       <DevPaletteSelector />
     </motion.div>
   );
 }
