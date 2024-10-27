@@ -10,8 +10,6 @@ export function DevPaletteSelector() {
     setCurrentPalette(sessionStorage.getItem('paletteIndex'));
   }, []);
 
-  if (process.env.NODE_ENV !== 'development') return null;
-
   const setPalette = (index: number) => {
     sessionStorage.setItem('paletteIndex', index.toString());
     window.location.reload();
