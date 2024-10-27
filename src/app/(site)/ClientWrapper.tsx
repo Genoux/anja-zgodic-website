@@ -17,7 +17,7 @@ export function DevPaletteSelector() {
 
   return (
     <div className="fixed bottom-4 right-4 z-50 bg-white p-2 rounded shadow">
-      <div>Current: {currentPalette ?? 'Random'}</div>
+      <div>Current: {currentPalette}</div>
       <div className="grid gap-2 mt-2">
         {palettes.map((_, index) => (
           <button
@@ -43,9 +43,13 @@ export function DevPaletteSelector() {
     </div>
   );
 }
+
 interface ClientWrapperProps {
   children: ReactNode;
-  initialPaletteIndex: number;
+}
+
+function getRandomPalette() {
+  return Math.floor(Math.random() * palettes.length);
 }
 
 function updateFavicon(paletteIndex: number) {
@@ -62,41 +66,34 @@ function updatePaletteStyles(index: number) {
 }
 
 export default function ClientWrapper({
-  children,
-  initialPaletteIndex
+  children
 }: ClientWrapperProps) {
-  const [paletteIndex, setPaletteIndex] = useState(initialPaletteIndex);
-  const [mounted, setMounted] = useState(false);
+  const [paletteIndex, setPaletteIndex] = useState<number | null>(null);
 
-  // Initial mount effect
   useEffect(() => {
-    setMounted(true);
-    let finalIndex = initialPaletteIndex;
+    let finalIndex: number;
 
     try {
-      const sessionPalette = sessionStorage.getItem('paletteIndex');
-      if (sessionPalette !== null) {
-        finalIndex = parseInt(sessionPalette);
-        setPaletteIndex(finalIndex);
+      const stored = sessionStorage.getItem('paletteIndex');
+      if (stored !== null) {
+        finalIndex = parseInt(stored);
       } else {
-        sessionStorage.setItem('paletteIndex', initialPaletteIndex.toString());
+        finalIndex = getRandomPalette();
+        sessionStorage.setItem('paletteIndex', finalIndex.toString());
       }
     } catch (e) {
+      finalIndex = getRandomPalette();
       console.error('Session storage error:', e);
     }
 
-    // Always update styles and favicon
+    setPaletteIndex(finalIndex);
     updatePaletteStyles(finalIndex);
     updateFavicon(finalIndex);
   }, []);
 
-  // Effect to handle palette changes
-  useEffect(() => {
-    if (mounted) {
-      updatePaletteStyles(paletteIndex);
-      updateFavicon(paletteIndex);
-    }
-  }, [paletteIndex, mounted]);
+  if (paletteIndex === null) {
+    return null;
+  }
 
   return (
     <motion.div
@@ -106,7 +103,7 @@ export default function ClientWrapper({
       className="sm:grid grid-cols-5 justify-between h-screen w-full mx-auto"
     >
       {children}
-       <DevPaletteSelector />
+      {process.env.NODE_ENV === 'development' && <DevPaletteSelector />}
     </motion.div>
   );
 }

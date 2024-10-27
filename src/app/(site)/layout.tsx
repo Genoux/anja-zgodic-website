@@ -4,9 +4,6 @@ import ClientWrapper from '@/app/(site)/ClientWrapper';
 import { palettes } from './constants';
 import '@/app/globals.css';
 
-function getRandomPalette() {
-  return Math.floor(Math.random() * palettes.length);
-}
 
 export const metadata = {
   title: 'Anja Zgodic',
@@ -18,8 +15,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const initialPaletteIndex = getRandomPalette();
-  const palette = palettes[initialPaletteIndex];
+  const defaultPaletteIndex = 0;
+  const palette = palettes[defaultPaletteIndex];
 
   return (
     <html lang="en">
@@ -30,35 +27,14 @@ export default function RootLayout({
             --background: ${palette.background};
           }
         `}</style>
-        <link rel="icon" href={`/favicon-primary${initialPaletteIndex + 1}.ico`} />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  const stored = sessionStorage.getItem('paletteIndex');
-                  if (stored !== null) {
-                    const palettes = ${JSON.stringify(palettes)};
-                    const palette = palettes[parseInt(stored)];
-                    if (palette) {
-                      document.documentElement.style.setProperty('--primary', palette.primary);
-                      document.documentElement.style.setProperty('--background', palette.background);
-                    }
-                  }
-                } catch (e) {
-                  console.error('Error setting initial palette:', e);
-                }
-              })();
-            `,
-          }}
-        />
+        <link rel="icon" href={`/favicon-primary${defaultPaletteIndex + 1}.ico`} />
       </head>
       <body>
         <QueryProvider>
           <div className="sm:hidden fixed top-0 left-0 right-0 z-50 bg-white">
             <NavigationBar />
           </div>
-          <ClientWrapper initialPaletteIndex={initialPaletteIndex}>
+          <ClientWrapper>
             <main className="flex-1 overflow-auto col-span-3 h-full border-r border-primary border-opacity-10 pt-16 sm:pt-0">
               {children}
             </main>
