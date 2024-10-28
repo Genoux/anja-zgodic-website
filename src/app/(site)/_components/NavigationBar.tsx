@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import { useQuery } from '@tanstack/react-query';
 import { groq } from 'next-sanity';
 import { client } from '@/sanity/lib/client';
+import { motion } from 'framer-motion';
 
 const resumeQuery = groq`*[_type == "resume"][0]{
   "url": file.asset->url,
@@ -17,6 +18,29 @@ const resumeQuery = groq`*[_type == "resume"][0]{
 async function fetchResume() {
   return await client.fetch(resumeQuery);
 }
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -50 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.3,
+      ease: [0.65, 0, 0.35, 1]
+    }
+  }
+};
 
 const NavigationBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -77,7 +101,7 @@ const NavigationBar = () => {
                 href={item.href}
                 className={clsx(
                   'text-lg font-bold p-2 w-full hover:opacity-75 transition-all duration-200 ease-in-out',
-                  { 'opacity-50': pathname === item.href } // Active state for mobile
+                  { 'opacity-50': pathname === item.href }
                 )}
                 onClick={toggleMenu}
               >
@@ -97,40 +121,50 @@ const NavigationBar = () => {
 
       {/* Desktop Navigation */}
       <nav className="hidden sm:flex justify-center px-8 flex-col space-y-2 items-center w-full sm:max-w-[300px] h-full">
-        <div className="flex flex-col items-start gap-3 w-full">
-          {!isHomePage && (
-            <Link href="/">
-              <h1 className="text-primary text-4xl font-bold mb-4 leading-[92%]">
-                ANJA
-                <br />
-                ZGODIC
-              </h1>
-            </Link>
-          )}
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={clsx(
-                'bg-primary w-full text-background px-4 py-3 text-sm text-left transition-all duration-125 ease-in-out border border-primary hover:bg-background hover:text-primary hover:w-[105%]',
-                {
-                  'bg-transparent text-primary px-6 w-[110%] cursor-auto pointer-events-none':
-                    pathname === item.href,
-                  'w-full': pathname !== item.href,
-                }
-              )}
-            >
-              {item.name}
-            </Link>
-          ))}
-          <Link
-            target="_blank"
-            href={resume?.url || ''}
-            className="border border-primary text-primary w-full px-6 py-4 text-sm text-center font-bold hover:bg-primary hover:text-background transition-all duration-125 ease-in-out"
+          <motion.div 
+            className="flex flex-col items-start gap-3 w-full"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
           >
-            DOWNLOAD RESUME
-          </Link>
-        </div>
+            {!isHomePage && (
+              <motion.div variants={itemVariants} className="w-full">
+                <Link href="/">
+                  <h1 className="text-primary text-4xl font-bold mb-4 leading-[92%]">
+                    ANJA
+                    <br />
+                    ZGODIC
+                  </h1>
+                </Link>
+              </motion.div>
+            )}
+            {navItems.map((item) => (
+              <motion.div key={item.name} variants={itemVariants} className="w-full">
+                <Link
+                  href={item.href}
+                  className={clsx(
+                    'bg-primary w-full text-background px-4 py-3 text-sm text-left transition-all duration-125 ease-in-out border border-primary hover:bg-background hover:text-primary hover:w-[105%] block',
+                    {
+                      'bg-transparent text-primary px-6 w-[110%] cursor-auto pointer-events-none':
+                        pathname === item.href,
+                      'w-full': pathname !== item.href,
+                    }
+                  )}
+                >
+                  {item.name}
+                </Link>
+              </motion.div>
+            ))}
+            <motion.div variants={itemVariants} className="w-full">
+              <Link
+                target="_blank"
+                href={resume?.url || ''}
+                className="border border-primary text-primary w-full px-6 py-4 text-sm text-center font-bold hover:bg-primary hover:text-background transition-all duration-125 ease-in-out block"
+              >
+                DOWNLOAD RESUME
+              </Link>
+            </motion.div>
+          </motion.div>
       </nav>
     </>
   );
