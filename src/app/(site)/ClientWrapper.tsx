@@ -97,8 +97,8 @@ export default function ClientWrapper({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -100 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 1,  ease: [0.65, 0, 0.35, 1]   }}
       className="sm:grid grid-cols-6 justify-between h-screen w-full mx-auto"
     >
