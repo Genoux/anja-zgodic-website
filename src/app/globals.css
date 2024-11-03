@@ -16,16 +16,36 @@
   font-style: normal;
 }
 
-:root {
-  --background: #D5DFE2;
-  --primary: #2742CB;
-}
-
-
 body {
   background: var(--background);
   color: var(--primary);
   font-family: 'DINOT', Arial, Helvetica, sans-serif;
+}
+
+/* Scrollbar */
+.scrollbar-blue {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--background);
+}
+
+.scrollbar-blue::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-blue::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+.scrollbar-blue::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 20px;
+  border: 3px solid var(--background);
+}
+
+@layer components {
+  .responsive-heading {
+    font-size: 15vw;
+  }
 }
 
 @layer utilities {
@@ -34,24 +54,8 @@ body {
   }
 }
 
-/* Scrollbar */
-/* app/globals.css or your preferred global CSS file */
-
-.scrollbar-blue {
-  scrollbar-width: thin;
-  scrollbar-color: #2742CB #2742cb26;
-}
-
-.scrollbar-blue::-webkit-scrollbar {
-  width: 8px;
-}
-
-.scrollbar-blue::-webkit-scrollbar-track {
-  background: #f3f4f6;
-}
-
-.scrollbar-blue::-webkit-scrollbar-thumb {
-  background-color: #2742CB;
-  border-radius: 20px;
-  border: 3px solid #f3f4f6;
+code {
+  background-color: var(--primary);
+  color: var(--background);
+  padding: 0 5px;
 }

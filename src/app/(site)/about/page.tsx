@@ -1,23 +1,68 @@
-export default function About() {
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
+import { groq } from 'next-sanity';
+import { PortableText } from '@portabletext/react';
+import { About as AboutType } from '@/types';
+import FadeInWrapper from '@/app/(site)/_components/FadeInWrapper';
+import { client } from '@/sanity/lib/client';
+import { Loader } from '@/app/(site)/_components/Loader';
+import { TypedObject } from '@portabletext/types';
+import Link from 'next/link';
+
+const aboutQuery = groq`*[_type == "about"][0]`;
+
+async function fetchAbout(): Promise<AboutType> {
+  return (await client.fetch(aboutQuery)) as AboutType;
+}
+
+export default function AboutPage() {
+  const {
+    data: about,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['about'],
+    queryFn: fetchAbout,
+  });
+
+  if (isLoading) return <Loader />;
+  if (error) return <div>Error loading about data.</div>;
+
   return (
-    <div className="h-full p-12 overflow-auto scrollbar-blue gap-6 flex flex-col items-center md:items-start justify-center">
-      <h1 className="text-primary text-6xl font-bold">About Me</h1>
-      <p className="text-center md:text-start">
-        I am a Research Data Scientist at The Lubrizol Corporation, where I work on interesting
-        applications and on developing new methodologies for various types of data. Prior to
-        joining Lubrizol in 2023, I was a doctoral student at the University of South Carolina,
-        where I got my PhD in Biostatistics. I also hold a certificate in Strategic Innovation from
-        the Darla Moore School of Business, a MS from Brown University, and a BA from
-        Providence College. Between my undergraduate and graduate studies, I worked in
-        industry for four years, as a data scientist in a startup company and in a large
-        corporation.
-      </p>
-      <p className="text-center md:text-start">
-        My research at Lubrizol focuses on methods for high-dimensional data,
-        multivariate statistics, Bayesian approaches, effective computation, and optimization.
-        On this website, you can find my CV, publications, and software. I also enjoy
-        volunteering with the American Statistical Association.
-      </p>
+    <div className="h-full p-6 md:p-12 overflow-auto scrollbar-blue flex flex-col justify-start sm:justify-center">
+      <FadeInWrapper>
+        <h1 className="text-primary text-4xl md:text-6xl font-bold mb-6">
+          About Me
+        </h1>
+        <div className="flex flex-col gap-3">
+          <PortableText
+            value={about?.description as TypedObject[]}
+            components={{
+              types: {},
+              marks: {
+                link: ({ value, children }) => (
+                  <Link
+                    href={value.href}
+                    className="text-primary underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {children}
+                  </Link>
+                ),
+              },
+              block: {
+                normal: ({ children }) => (
+                  <p className="text-base opacity-90 tracking-wide leading-6">
+                    {children}
+                  </p>
+                ),
+              },
+            }}
+          />
+        </div>
+      </FadeInWrapper>
     </div>
   );
 }

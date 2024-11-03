@@ -1,77 +1,98 @@
-'use client'
+'use client';
 
-import { useEffect, useState, useRef } from 'react'
-import { client } from '@/sanity/lib/client'
-import { groq } from 'next-sanity'
-import { Experience } from '@/types'
-import ScrollTitle from '@/app/(site)/_components/ScrollTitle'
+import { useQuery } from '@tanstack/react-query';
+import { useRef } from 'react';
+import { groq } from 'next-sanity';
+import { Experience } from '@/types';
+import ScrollTitle from '@/app/(site)/_components/ScrollTitle';
+import FadeInWrapper from '@/app/(site)/_components/FadeInWrapper';
+import { client } from '@/sanity/lib/client';
+import { Loader } from '@/app/(site)/_components/Loader';
+import Link from 'next/link';
 
-const experienceQuery = groq`*[_type == "experience"] | order(startYear desc) {
-  _id,
-  title,
-  company,
-  startYear,
-  endYear,
-  description,
-  url,
-  responsibilities
-}`
+const experienceQuery = groq`*[_type == "experience"] | order(orderRank)`;
 
-async function getExperienceItems(): Promise<Experience[]> {
-  return await client.fetch(experienceQuery)
+async function fetchExperience(): Promise<Experience[]> {
+  return (await client.fetch(experienceQuery)) as Experience[];
 }
 
 export default function ExperiencePage() {
-  const [experienceItems, setExperienceItems] = useState<Experience[]>([])
-  const containerRef = useRef<HTMLDivElement>(null)
+  const {
+    data: experienceItems,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['experience'],
+    queryFn: fetchExperience,
+  });
 
-  useEffect(() => {
-    const fetchExperienceItems = async () => {
-      const data = await getExperienceItems()
-      setExperienceItems(data)
-    }
-    fetchExperienceItems()
-  }, [])
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  if (isLoading) return <Loader />;
+  if (error) return <div>Error loading experience data.</div>;
 
   return (
-    <div ref={containerRef} className="h-full overflow-auto scrollbar-blue">
-      {/* Use ScrollTitle with the scrollable container */}
+    <div
+      ref={containerRef}
+      className="h-full overflow-auto scrollbar-blue relative"
+    >
       <ScrollTitle title="Experience" containerRef={containerRef} />
       <div className="px-8">
-        {experienceItems.map((item: Experience) => (
-          <div key={item._id}>
-            <ExperienceItem key={item._id} item={item} />
-        </div>
-        ))}
+        <FadeInWrapper>
+          {experienceItems?.map((item, index) => (
+            <div key={item._id}>
+              <ExperienceItem
+                item={item}
+                isLast={index === experienceItems.length - 1}
+              />
+            </div>
+          ))}
+        </FadeInWrapper>
       </div>
     </div>
-  )
+  );
 }
 
-function ExperienceItem({ item }: { item: Experience }) {
+function ExperienceItem({
+  item,
+  isLast,
+}: {
+  item: Experience;
+  isLast: boolean;
+}) {
   return (
-    <div className="flex flex-col gap-4 py-8 border-b border-primary border-opacity-10">
-      <h2 className="text-2xl font-semibold mb-2">{item.title}</h2>
-      <p className="text-lg mb-1">{item.company}</p>
-      <p className="text-sm mb-2">
-        {item.startYear} - {item.endYear}
-      </p>
-      <p className="mb-2">{item.description}</p>
-      {item.url && (
-        <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-primary underline mb-2 block">
-          Company Website
-        </a>
-      )}
-      {item.responsibilities && item.responsibilities.length > 0 && (
-        <div className="mt-2">
-          <h3 className="text-lg font-semibold mb-1">Accomplishments & Responsibilities:</h3>
-          <ul className="list-disc list-inside">
+    <div
+      className={`flex flex-col gap-4 py-8 ${!isLast ? 'border-b border-primary border-opacity-20' : ''}`}
+    >
+      <div className="flex flex-col gap-2">
+        <h2 className="text-2xl font-semibold mb-2">{item.title}</h2>
+        <p className="text-base">
+          {item.startYear} - {item.endYear || 'Present'}
+        </p>
+        <p>{item.description}</p>
+        <Link
+          href={item.url || '#'}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline mb-2 block"
+        >
+          <p className="text-lg">{item.company}</p>
+        </Link>
+      </div>
+      <div className="flex flex-col gap-4">
+        <h3 className="text-lg font-semibold">
+          Accomplishments & Responsibilities:
+        </h3>
+        {item.responsibilities && item.responsibilities.length > 0 && (
+          <ul className="list-disc ml-5 space-y-1">
             {item.responsibilities.map((responsibility, index) => (
-              <li key={index}>{responsibility}</li>
+              <li key={index} className="text-base">
+                {responsibility}
+              </li>
             ))}
           </ul>
-        </div>
-      )}
+        )}
+      </div>
     </div>
-  )
+  );
 }
