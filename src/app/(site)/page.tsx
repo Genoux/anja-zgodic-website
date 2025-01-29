@@ -2,25 +2,20 @@
 import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
 import { groq } from 'next-sanity';
-import { Contact } from '@/types';
 import { motion } from 'framer-motion';
-import { UrlObject } from 'url';
 import LinkedInIcon from '@/app/(site)/_components/icons/Linkedin';
 import XIcon from '@/app/(site)/_components/icons/XIcon';
 import GitHubIcon from '@/app/(site)/_components/icons/GitHub';
 import { useQuery } from '@tanstack/react-query';
 
-const settingsQuery = groq`*[_type == "contact"][0]{
+const contactQuery = groq`*[_type == "contact"][0]{
   email,
-  address,
-  socialLinks[]{
-    platform,
-    url,
-    icon
-  }
+  github,
+  linkedin,
+  x
 }`;
 
-const getSocialIcon = (platform: string | undefined) => {
+const getSocialIcon = (platform: string) => {
   switch (platform?.toLowerCase()) {
     case 'github':
       return <GitHubIcon className="w-6 h-6" />;
@@ -56,12 +51,19 @@ const itemVariants = {
 };
 
 export default function Home() {
-  const { data: contact } = useQuery<Contact>({
+  const { data: contact } = useQuery({
     queryKey: ['contact'],
-    queryFn: () => client.fetch(settingsQuery),
+    queryFn: () => client.fetch(contactQuery),
   });
 
   if (!contact) return null;
+
+  // Create social links array from individual fields
+  const socialLinks = [
+    { platform: 'github', url: contact.github },
+    { platform: 'linkedin', url: contact.linkedin },
+    { platform: 'x', url: contact.x }
+  ].filter(link => link.url);
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
@@ -121,23 +123,19 @@ export default function Home() {
           animate="visible"
           className="flex space-x-4"
         >
-          {contact.socialLinks?.map(
-            (link: {
-              url?: string | UrlObject;
-              platform?: string;
-              _key: string;
-            }) => (
-              <motion.div key={link._key} variants={itemVariants}>
-                <Link
-                  href={link.url || '#'}
-                  className="text-primary hover:text-primary-dark transition-colors duration-300"
-                  aria-label={link.platform}
-                >
-                  {getSocialIcon(link.platform)}
-                </Link>
-              </motion.div>
-            )
-          )}
+          {socialLinks.map((link) => (
+            <motion.div key={link.platform} variants={itemVariants}>
+              <Link
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary-dark transition-colors duration-300"
+                aria-label={link.platform}
+              >
+                {getSocialIcon(link.platform)}
+              </Link>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </div>
