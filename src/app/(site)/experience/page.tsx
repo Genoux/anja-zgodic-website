@@ -86,7 +86,7 @@ function ExperienceItem({
         <p className="text-base">
           {item.startYear} - {item.endYear || 'Present'}
         </p>
-        
+
         <div className="flex flex-col gap-2">
           {item.urls?.map((urlItem, index) => (
             <Link

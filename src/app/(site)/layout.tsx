@@ -4,10 +4,10 @@ import ClientWrapper from '@/app/(site)/ClientWrapper';
 import { palettes } from './constants';
 import '@/app/globals.css';
 
-
 export const metadata = {
   title: 'Anja Zgodic',
-  description: 'Anja Zgodic is a software engineer and data scientist based in the United States.'
+  description:
+    'Anja Zgodic is a software engineer and data scientist based in the United States.',
 };
 
 export default function RootLayout({
@@ -27,7 +27,10 @@ export default function RootLayout({
             --background: ${palette.background};
           }
         `}</style>
-        <link rel="icon" href={`/favicon-primary${defaultPaletteIndex + 1}.ico`} />
+        <link
+          rel="icon"
+          href={`/favicon-primary${defaultPaletteIndex + 1}.ico`}
+        />
       </head>
       <body>
         <QueryProvider>

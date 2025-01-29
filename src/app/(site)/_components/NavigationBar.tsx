@@ -25,9 +25,9 @@ const containerVariants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.1,
-      delayChildren: 1.2
-    }
-  }
+      delayChildren: 1.2,
+    },
+  },
 };
 
 const itemVariants = {
@@ -37,22 +37,22 @@ const itemVariants = {
     x: 0,
     transition: {
       duration: 0.3,
-      ease: [0.65, 0, 0.35, 1]
-    }
-  }
+      ease: [0.65, 0, 0.35, 1],
+    },
+  },
 };
 
 const nameVariants = {
   hidden: { height: 0, opacity: 0, marginBottom: 0 },
   visible: {
-    height: "auto",
+    height: 'auto',
     opacity: 1,
-    marginBottom: "1rem",
+    marginBottom: '1rem',
     transition: {
       height: { duration: 0.3, ease: [0.65, 0, 0.35, 1] },
-      opacity: { duration: 0.3, ease: [0.65, 0, 0.35, 1] }
-    }
-  }
+      opacity: { duration: 0.3, ease: [0.65, 0, 0.35, 1] },
+    },
+  },
 };
 
 const NavigationBar = () => {
@@ -143,7 +143,7 @@ const NavigationBar = () => {
           <motion.div
             variants={nameVariants}
             initial="hidden"
-            animate={!isHomePage ? "visible" : "hidden"}
+            animate={!isHomePage ? 'visible' : 'hidden'}
             className="w-full overflow-hidden"
           >
             <Link href="/">
@@ -156,7 +156,11 @@ const NavigationBar = () => {
           </motion.div>
 
           {navItems.map((item) => (
-            <motion.div key={item.name} variants={itemVariants} className="w-full">
+            <motion.div
+              key={item.name}
+              variants={itemVariants}
+              className="w-full"
+            >
               <Link
                 href={item.href}
                 className={clsx(

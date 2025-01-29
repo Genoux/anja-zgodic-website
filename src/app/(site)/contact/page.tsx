@@ -63,18 +63,20 @@ export default function ContactPage() {
               {contact?.email}
             </Link>
             <div className="flex space-x-4 w-full justify-center">
-              {contact?.socialLinks?.map((link: { platform: string; url: string; _key: string }) => (
-                <Link
-                  key={link._key}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:text-primary-dark transition-colors duration-300"
-                  aria-label={link.platform}
-                >
-                  {getSocialIcon(link.platform)}
-                </Link>
-              ))}
+              {contact?.socialLinks?.map(
+                (link: { platform: string; url: string; _key: string }) => (
+                  <Link
+                    key={link._key}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:text-primary-dark transition-colors duration-300"
+                    aria-label={link.platform}
+                  >
+                    {getSocialIcon(link.platform)}
+                  </Link>
+                )
+              )}
             </div>
           </div>
         </div>

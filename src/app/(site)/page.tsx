@@ -39,9 +39,9 @@ const containerVariants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.1,
-      delayChildren: 0.5
-    }
-  }
+      delayChildren: 0.5,
+    },
+  },
 };
 
 const itemVariants = {
@@ -50,9 +50,9 @@ const itemVariants = {
     opacity: 1,
     transition: {
       duration: 0.3,
-      ease: [0.65, 0, 0.35, 1]
-    }
-  }
+      ease: [0.65, 0, 0.35, 1],
+    },
+  },
 };
 
 export default function Home() {
@@ -74,7 +74,7 @@ export default function Home() {
               transition={{
                 duration: 0.3,
                 ease: [0.65, 0, 0.35, 1],
-                delay: 0.2
+                delay: 0.2,
               }}
             >
               ANJA
@@ -85,19 +85,19 @@ export default function Home() {
               transition={{
                 duration: 0.3,
                 ease: [0.65, 0, 0.35, 1],
-                delay: 0.4
+                delay: 0.4,
               }}
             >
               ZGODIC
             </motion.div>
           </div>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{
               duration: 0.3,
               ease: [0.65, 0, 0.35, 1],
-              delay: 0.5
+              delay: 0.5,
             }}
             className="sm:hidden hover:px-6 flex text-md items-center md:items-start gap-4"
           >
@@ -115,7 +115,7 @@ export default function Home() {
             </Link>
           </motion.div>
         </div>
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"

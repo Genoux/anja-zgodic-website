@@ -24,7 +24,9 @@ export function DevPaletteSelector() {
             key={index}
             onClick={() => setPalette(index)}
             className={`px-3 py-1 rounded ${
-              currentPalette === index.toString() ? 'bg-blue-500 text-white' : 'bg-gray-200'
+              currentPalette === index.toString()
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-200'
             }`}
           >
             Palette {index}
@@ -55,19 +57,23 @@ function getRandomPalette() {
 function updateFavicon(paletteIndex: number) {
   const faviconElement = document.querySelector("link[rel='icon']");
   if (faviconElement) {
-    faviconElement.setAttribute('href', `/favicon-primary${paletteIndex + 1}.ico`);
+    faviconElement.setAttribute(
+      'href',
+      `/favicon-primary${paletteIndex + 1}.ico`
+    );
   }
 }
 
 function updatePaletteStyles(index: number) {
   const palette = palettes[index];
   document.documentElement.style.setProperty('--primary', palette.primary);
-  document.documentElement.style.setProperty('--background', palette.background);
+  document.documentElement.style.setProperty(
+    '--background',
+    palette.background
+  );
 }
 
-export default function ClientWrapper({
-  children
-}: ClientWrapperProps) {
+export default function ClientWrapper({ children }: ClientWrapperProps) {
   const [paletteIndex, setPaletteIndex] = useState<number | null>(null);
 
   useEffect(() => {
@@ -99,7 +105,7 @@ export default function ClientWrapper({
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, delay: 1,  ease: [0.65, 0, 0.35, 1]   }}
+      transition={{ duration: 0.5, delay: 1, ease: [0.65, 0, 0.35, 1] }}
       className="sm:grid grid-cols-6 justify-between h-screen w-full mx-auto"
     >
       {children}

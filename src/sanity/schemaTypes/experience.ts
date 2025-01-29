@@ -1,5 +1,8 @@
 import { defineField, defineType } from 'sanity';
-import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list';
+import {
+  orderRankField,
+  orderRankOrdering,
+} from '@sanity/orderable-document-list';
 
 export default defineType({
   name: 'experience',
@@ -30,21 +33,23 @@ export default defineType({
       name: 'urls',
       title: 'URLs',
       type: 'array',
-      of: [{
-        type: 'object',
-        fields: [
-          {
-            name: 'name',
-            title: 'Name',
-            type: 'string'
-          },
-          {
-            name: 'url',
-            title: 'URL',
-            type: 'url'
-          }
-        ]
-      }]
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'url',
+            },
+          ],
+        },
+      ],
     }),
     defineField({
       name: 'responsibilities',

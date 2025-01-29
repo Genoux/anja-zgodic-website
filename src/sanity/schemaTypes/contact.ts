@@ -26,19 +26,20 @@ export default defineType({
                 list: [
                   { title: 'GitHub', value: 'github' },
                   { title: 'LinkedIn', value: 'linkedin' },
-                  { title: 'X (Twitter)', value: 'x' }
-                ]
-              }
+                  { title: 'X (Twitter)', value: 'x' },
+                ],
+              },
             },
             {
               name: 'url',
               title: 'URL',
               type: 'url',
-              validation: (Rule) => Rule.required().uri({ scheme: ['http', 'https'] })
-            }
-          ]
-        }
-      ]
-    })
-  ]
+              validation: (Rule) =>
+                Rule.required().uri({ scheme: ['http', 'https'] }),
+            },
+          ],
+        },
+      ],
+    }),
+  ],
 });

@@ -14,7 +14,7 @@ import { urlFor } from '@/sanity/lib/image';
 const mediaQuery = groq`*[_type == "media"] | order(orderRank)`;
 
 async function fetchMedia() {
-  return (await client.fetch(mediaQuery));
+  return await client.fetch(mediaQuery);
 }
 
 export default function MediaPage() {
@@ -37,7 +37,9 @@ export default function MediaPage() {
       <ScrollTitle title="In The Media" containerRef={containerRef} />
       <FadeInWrapper>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-8">
-          {mediaItems?.map((item: Media) => <MediaItem key={item._id} item={item} />)}
+          {mediaItems?.map((item: Media) => (
+            <MediaItem key={item._id} item={item} />
+          ))}
         </div>
       </FadeInWrapper>
     </div>

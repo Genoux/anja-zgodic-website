@@ -15,7 +15,6 @@ import Link from 'next/link';
 
 const researchQuery = groq`*[_type == "research"] | order(orderRank)`;
 
-
 async function fetchResearch(): Promise<Research[]> {
   return (await client.fetch(researchQuery)) as Research[];
 }
