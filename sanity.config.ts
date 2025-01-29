@@ -22,6 +22,8 @@ export default defineConfig({
     origin: [
       'https://anja-zgodic-website.netlify.app',
       'http://localhost:3000',
+      'https://anjazgodic.com',
+      'https://www.anjazgodic.com',
     ],
     credentials: true,
   },
