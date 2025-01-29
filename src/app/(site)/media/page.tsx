@@ -55,17 +55,18 @@ function MediaItem({ item }: { item: Media }) {
       className="block group"
     >
       <div className="relative bg-white border border-primary border-opacity-10 rounded-md overflow-hidden transition-shadow duration-300 group-hover:shadow-lg">
-        <div className="relative h-48">
+        <div className="relative h-48 w-full">
           {item.image ? (
             <Image
               src={urlFor(item.image).url()}
               alt={item.title || 'Media Item'}
+              className={`w-full h-full ${
+                item.imageDisplay === 'contain' ? 'object-contain' : 'object-cover'
+              }`}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className={`object-${item.imageDisplay || 'contain'} transition-transform duration-300 group-hover:scale-105`}
             />
           ) : (
-            <div className="bg-primary bg-opacity-10 h-full w-full flex items-center justify-center">
+            <div className="h-full w-full flex items-center justify-center bg-primary bg-opacity-10">
               <span className="text-primary text-xs text-center px-2">
                 {item.title}
               </span>
