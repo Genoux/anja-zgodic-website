@@ -1,8 +1,5 @@
 import { defineField, defineType } from 'sanity';
-import {
-  orderRankField,
-  orderRankOrdering,
-} from '@sanity/orderable-document-list';
+import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list';
 
 export default defineType({
   name: 'experience',
@@ -27,18 +24,27 @@ export default defineType({
     defineField({
       name: 'endYear',
       title: 'End Year',
-      type: 'string', // Using string to allow "present" or a year
+      type: 'string',
     }),
     defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'text',
-      validation: (Rule) => [Rule.required(), Rule.max(100)],
-    }),
-    defineField({
-      name: 'url',
-      title: 'URL',
-      type: 'url',
+      name: 'urls',
+      title: 'URLs',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          {
+            name: 'name',
+            title: 'Name',
+            type: 'string'
+          },
+          {
+            name: 'url',
+            title: 'URL',
+            type: 'url'
+          }
+        ]
+      }]
     }),
     defineField({
       name: 'responsibilities',
@@ -46,7 +52,7 @@ export default defineType({
       type: 'array',
       of: [{ type: 'string' }],
     }),
-    orderRankField({ type: 'experience' }), // Add orderRank field
+    orderRankField({ type: 'experience' }),
   ],
-  orderings: [orderRankOrdering], // Enable ordering by rank
+  orderings: [orderRankOrdering],
 });

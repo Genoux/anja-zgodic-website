@@ -1,8 +1,5 @@
 import { defineField, defineType } from 'sanity';
-import {
-  orderRankField,
-  orderRankOrdering,
-} from '@sanity/orderable-document-list';
+import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list';
 
 export default defineType({
   name: 'media',
@@ -20,8 +17,20 @@ export default defineType({
       title: 'Image',
       type: 'image',
       options: {
-        hotspot: true, // Enables the hotspot functionality for image cropping
+        hotspot: true,
       },
+    }),
+    defineField({
+      name: 'imageDisplay',
+      title: 'Image Display',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Contain', value: 'contain' },
+          { title: 'Cover', value: 'cover' },
+        ],
+      },
+      initialValue: 'contain',
     }),
     defineField({
       name: 'link',
@@ -29,9 +38,9 @@ export default defineType({
       type: 'url',
       validation: (Rule) => Rule.required(),
     }),
-    orderRankField({ type: 'media' }), // Add orderRank field
+    orderRankField({ type: 'media' }),
   ],
-  orderings: [orderRankOrdering], // Enable ordering by rank
+  orderings: [orderRankOrdering],
   preview: {
     select: {
       title: 'title',
