@@ -15,17 +15,12 @@ import Link from 'next/link';
 
 const researchQuery = groq`*[_type == "research"] | order(orderRank)`;
 
-const resumeQuery = groq`*[_type == "resume"][0]{
-  "url": file.asset->url,
-  updatedAt
-}`;
-
 async function fetchResearch(): Promise<Research[]> {
   return (await client.fetch(researchQuery)) as Research[];
 }
 
 async function fetchResume() {
-  return await client.fetch(resumeQuery);
+  return await client.fetch(researchQuery);
 }
 
 export default function ResearchPage() {

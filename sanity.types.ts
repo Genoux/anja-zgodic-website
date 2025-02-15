@@ -121,40 +121,9 @@ export type Contact = {
   _updatedAt: string;
   _rev: string;
   email?: string;
-  address?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: 'span';
-      _key: string;
-    }>;
-    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
-    listItem?: 'bullet' | 'number';
-    markDefs?: Array<{
-      href?: string;
-      _type: 'link';
-      _key: string;
-    }>;
-    level?: number;
-    _type: 'block';
-    _key: string;
-  }>;
-  socialLinks?: Array<{
-    platform?: string;
-    url?: string;
-    icon?: {
-      asset?: {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: 'image';
-    };
-    _key: string;
-  }>;
+  github?: string;
+  linkedin?: string;
+  x?: string;
 };
 
 export type Media = {
@@ -175,6 +144,7 @@ export type Media = {
     crop?: SanityImageCrop;
     _type: 'image';
   };
+  imageDisplay?: 'contain' | 'cover';
   link?: string;
   orderRank?: string;
 };
@@ -246,8 +216,11 @@ export type Experience = {
   company?: string;
   startYear?: number;
   endYear?: string;
-  description?: string;
-  url?: string;
+  urls?: Array<{
+    name?: string;
+    url?: string;
+    _key: string;
+  }>;
   responsibilities?: Array<string>;
   orderRank?: string;
 };
@@ -351,39 +324,16 @@ export declare const internalGroqTypeReferenceTo: unique symbol;
 // Query: *[_type == "contact"][0]{  email,  address,  socialLinks[]{    platform,    url,    icon  }}
 export type SettingsQueryResult = {
   email: string | null;
-  address: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: 'span';
-      _key: string;
-    }>;
-    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
-    listItem?: 'bullet' | 'number';
-    markDefs?: Array<{
-      href?: string;
-      _type: 'link';
-      _key: string;
-    }>;
-    level?: number;
-    _type: 'block';
-    _key: string;
-  }> | null;
-  socialLinks: Array<{
-    platform: string | null;
-    url: string | null;
-    icon: {
-      asset?: {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: 'image';
-    } | null;
-  }> | null;
+  address: null;
+  socialLinks: null;
+} | null;
+
+// Source: ./src/app/(site)/_components/NavigationBar.tsx
+// Variable: resumeQuery
+// Query: *[_type == "resume"][0]{ "url": file.asset->url, updatedAt}
+export type ResumeQueryResult = {
+  url: string | null;
+  updatedAt: string | null;
 } | null;
 
 // Source: ./src/app/(site)/about/page.tsx
@@ -416,59 +366,6 @@ export type AboutQueryResult = {
   }>;
 } | null;
 
-// Source: ./src/app/(site)/_components/NavigationBar.tsx
-// Variable: resumeQuery
-// Query: *[_type == "resume"][0]{  "url": file.asset->url}
-export type ResumeQueryResult = {
-  url: string | null;
-} | null;
-
-// Source: ./src/app/(site)/contact/page.tsx
-// Variable: contactQuery
-// Query: *[_type == "contact"][0]
-export type ContactQueryResult = {
-  _id: string;
-  _type: 'contact';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  email?: string;
-  address?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: 'span';
-      _key: string;
-    }>;
-    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
-    listItem?: 'bullet' | 'number';
-    markDefs?: Array<{
-      href?: string;
-      _type: 'link';
-      _key: string;
-    }>;
-    level?: number;
-    _type: 'block';
-    _key: string;
-  }>;
-  socialLinks?: Array<{
-    platform?: string;
-    url?: string;
-    icon?: {
-      asset?: {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: 'image';
-    };
-    _key: string;
-  }>;
-} | null;
-
 // Source: ./src/app/(site)/experience/page.tsx
 // Variable: experienceQuery
 // Query: *[_type == "experience"] | order(orderRank)
@@ -482,11 +379,22 @@ export type ExperienceQueryResult = Array<{
   company?: string;
   startYear?: number;
   endYear?: string;
-  description?: string;
-  url?: string;
+  urls?: Array<{
+    name?: string;
+    url?: string;
+    _key: string;
+  }>;
   responsibilities?: Array<string>;
   orderRank?: string;
 }>;
+
+// Source: ./src/app/(site)/contact/page.tsx
+// Variable: contactQuery
+// Query: *[_type == "contact"][0]{  email,  socialLinks[]{    platform,    url,    icon  }}
+export type ContactQueryResult = {
+  email: string | null;
+  socialLinks: null;
+} | null;
 
 // Source: ./src/app/(site)/media/page.tsx
 // Variable: mediaQuery
@@ -509,6 +417,7 @@ export type MediaQueryResult = Array<{
     crop?: SanityImageCrop;
     _type: 'image';
   };
+  imageDisplay?: 'contain' | 'cover';
   link?: string;
   orderRank?: string;
 }>;
@@ -582,10 +491,10 @@ import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "contact"][0]{\n  email,\n  address,\n  socialLinks[]{\n    platform,\n    url,\n    icon\n  }\n}': SettingsQueryResult;
+    '*[_type == "resume"][0]{\n "url": file.asset->url,\n updatedAt\n}': ResumeQueryResult;
     '*[_type == "about"][0]': AboutQueryResult;
-    '*[_type == "resume"][0]{\n  "url": file.asset->url\n}': ResumeQueryResult;
-    '*[_type == "contact"][0]': ContactQueryResult;
     '*[_type == "experience"] | order(orderRank)': ExperienceQueryResult;
+    '*[_type == "contact"][0]{\n  email,\n  socialLinks[]{\n    platform,\n    url,\n    icon\n  }\n}': ContactQueryResult;
     '*[_type == "media"] | order(orderRank)': MediaQueryResult;
     '*[_type == "research"] | order(orderRank)': ResearchQueryResult;
     '*[_type == "software"] | order(orderRank)': SoftwareQueryResult;

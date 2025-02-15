@@ -9,31 +9,37 @@ export default defineType({
       name: 'email',
       title: 'Email',
       type: 'string',
-      validation: (Rule) => Rule.required().email(),
     }),
     defineField({
-      name: 'address',
-      title: 'Address',
+      name: 'socialLinks',
+      title: 'Social Links',
       type: 'array',
-      of: [{ type: 'block', options: { rows: 2 } }],
-    }),
-    defineField({
-      name: 'github',
-      title: 'GitHub',
-      type: 'url',
-      validation: (Rule) => Rule.required().uri({ scheme: ['http', 'https'] }),
-    }),
-    defineField({
-      name: 'linkedin',
-      title: 'LinkedIn',
-      type: 'url',
-      validation: (Rule) => Rule.required().uri({ scheme: ['http', 'https'] }),
-    }),
-    defineField({
-      name: 'x',
-      title: 'X (Twitter)',
-      type: 'url',
-      validation: (Rule) => Rule.required().uri({ scheme: ['http', 'https'] }),
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'platform',
+              title: 'Platform',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'GitHub', value: 'github' },
+                  { title: 'LinkedIn', value: 'linkedin' },
+                  { title: 'X (Twitter)', value: 'x' },
+                ],
+              },
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'url',
+              validation: (Rule) =>
+                Rule.required().uri({ scheme: ['http', 'https'] }),
+            },
+          ],
+        },
+      ],
     }),
   ],
 });

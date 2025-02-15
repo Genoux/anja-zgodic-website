@@ -1,14 +1,29 @@
 'use client';
-
 import { useQuery } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { groq } from 'next-sanity';
-import { Experience } from '@/types';
 import ScrollTitle from '@/app/(site)/_components/ScrollTitle';
 import FadeInWrapper from '@/app/(site)/_components/FadeInWrapper';
 import { client } from '@/sanity/lib/client';
 import { Loader } from '@/app/(site)/_components/Loader';
 import Link from 'next/link';
+
+interface UrlItem {
+  name: string;
+  url: string;
+}
+
+interface Experience {
+  _id: string;
+  _type: string;
+  title: string;
+  company: string;
+  startYear: number;
+  endYear: string;
+  urls: UrlItem[];
+  responsibilities: string[];
+  orderRank: number;
+}
 
 const experienceQuery = groq`*[_type == "experience"] | order(orderRank)`;
 
@@ -62,22 +77,29 @@ function ExperienceItem({
 }) {
   return (
     <div
-      className={`flex flex-col gap-4 py-8 ${!isLast ? 'border-b border-primary border-opacity-20' : ''}`}
+      className={`flex flex-col gap-4 py-8 ${
+        !isLast ? 'border-b border-primary border-opacity-20' : ''
+      }`}
     >
       <div className="flex flex-col gap-2">
         <h2 className="text-2xl font-semibold mb-2">{item.title}</h2>
         <p className="text-base">
           {item.startYear} - {item.endYear || 'Present'}
         </p>
-        <p>{item.description}</p>
-        <Link
-          href={item.url || '#'}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary underline mb-2 block"
-        >
-          <p className="text-lg">{item.company}</p>
-        </Link>
+
+        <div className="flex flex-col gap-2">
+          {item.urls?.map((urlItem, index) => (
+            <Link
+              key={index}
+              href={urlItem.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline block"
+            >
+              <p className={index === 0 ? "text-lg" : "text-sm"}>{urlItem.name}</p>
+            </Link>
+          ))}
+        </div>
       </div>
       <div className="flex flex-col gap-4">
         <h3 className="text-lg font-semibold">
