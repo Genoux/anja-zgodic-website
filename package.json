@@ -1,10 +1,6 @@
 {
   "name": "anja-zgodic-website",
-<<<<<<< HEAD
   "version": "1.0.5",
-=======
-  "version": "1.0.0",
->>>>>>> origin/main
   "private": true,
   "scripts": {
     "dev": "next dev",
