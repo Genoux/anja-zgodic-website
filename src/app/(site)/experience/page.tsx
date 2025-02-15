@@ -96,7 +96,7 @@ function ExperienceItem({
               rel="noopener noreferrer"
               className="text-primary underline block"
             >
-              <p className="text-lg">{urlItem.name}</p>
+              <p className={index === 0 ? "text-lg" : "text-sm"}>{urlItem.name}</p>
             </Link>
           ))}
         </div>
