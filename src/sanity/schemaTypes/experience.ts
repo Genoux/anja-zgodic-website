@@ -14,11 +14,7 @@ export default defineType({
       title: 'Title',
       type: 'string',
     }),
-    defineField({
-      name: 'company',
-      title: 'Company',
-      type: 'string',
-    }),
+
     defineField({
       name: 'startYear',
       title: 'Start Year',
@@ -30,26 +26,19 @@ export default defineType({
       type: 'string',
     }),
     defineField({
-      name: 'urls',
-      title: 'URLs',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'name',
-              title: 'Name',
-              type: 'string',
-            },
-            {
-              name: 'url',
-              title: 'URL',
-              type: 'url',
-            },
-          ],
-        },
-      ],
+      name: 'department',
+      title: 'Department',
+      type: 'string',
+    }),
+    defineField({
+      name: 'url',
+      title: 'URL',
+      type: 'url',
+    }),
+    defineField({
+      name: 'company',
+      title: 'Company',
+      type: 'string',
     }),
     defineField({
       name: 'responsibilities',

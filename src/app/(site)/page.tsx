@@ -8,7 +8,7 @@ import XIcon from '@/app/(site)/_components/icons/XIcon';
 import GitHubIcon from '@/app/(site)/_components/icons/GitHub';
 import { useQuery } from '@tanstack/react-query';
 
-const contactQuery = groq`*[_type == "contact"][0]{
+const getContactQuery = groq`*[_type == "contact"][0]{
   email,
   github,
   linkedin,
@@ -53,7 +53,7 @@ const itemVariants = {
 export default function Home() {
   const { data: contact } = useQuery({
     queryKey: ['contact'],
-    queryFn: () => client.fetch(contactQuery),
+    queryFn: () => client.fetch(getContactQuery),
   });
 
   if (!contact) return null;

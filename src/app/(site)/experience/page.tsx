@@ -8,19 +8,15 @@ import { client } from '@/sanity/lib/client';
 import { Loader } from '@/app/(site)/_components/Loader';
 import Link from 'next/link';
 
-interface UrlItem {
-  name: string;
-  url: string;
-}
-
 interface Experience {
   _id: string;
   _type: string;
   title: string;
-  company: string;
   startYear: number;
   endYear: string;
-  urls: UrlItem[];
+  department: string;
+  url: string;
+  company: string;
   responsibilities: string[];
   orderRank: number;
 }
@@ -77,9 +73,8 @@ function ExperienceItem({
 }) {
   return (
     <div
-      className={`flex flex-col gap-4 py-8 ${
-        !isLast ? 'border-b border-primary border-opacity-20' : ''
-      }`}
+      className={`flex flex-col gap-4 py-8 ${!isLast ? 'border-b border-primary border-opacity-20' : ''
+        }`}
     >
       <div className="flex flex-col gap-2">
         <h2 className="text-2xl font-semibold mb-2">{item.title}</h2>
@@ -88,17 +83,17 @@ function ExperienceItem({
         </p>
 
         <div className="flex flex-col gap-2">
-          {item.urls?.map((urlItem, index) => (
+          <div className="flex flex-col">
             <Link
-              key={index}
-              href={urlItem.url}
+              href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary underline block"
+              className="text-primary underline"
             >
-              <p className={index === 0 ? "text-lg" : "text-sm"}>{urlItem.name}</p>
+              <p className='text-lg'>{item.department}</p>
             </Link>
-          ))}
+            <p className="text-md text-primary mt-2">{item.company || ''}</p>
+          </div>
         </div>
       </div>
       <div className="flex flex-col gap-4">
