@@ -217,9 +217,14 @@ export type Experience = {
   title?: string;
   startYear?: number;
   endYear?: string;
-  department?: string;
-  url?: string;
-  company?: string;
+  department?: {
+    name?: string;
+    url?: string;
+  };
+  company?: {
+    name?: string;
+    url?: string;
+  };
   responsibilities?: Array<string>;
   orderRank?: string;
 };
@@ -328,6 +333,14 @@ export type GetContactQueryResult = {
   x: null;
 } | null;
 
+// Source: ./src/app/(site)/_components/NavigationBar.tsx
+// Variable: resumeQuery
+// Query: *[_type == "resume"][0]{ "url": file.asset->url, updatedAt}
+export type ResumeQueryResult = {
+  url: string | null;
+  updatedAt: string | null;
+} | null;
+
 // Source: ./src/app/(site)/about/page.tsx
 // Variable: aboutQuery
 // Query: *[_type == "about"][0]
@@ -358,14 +371,6 @@ export type AboutQueryResult = {
   }>;
 } | null;
 
-// Source: ./src/app/(site)/_components/NavigationBar.tsx
-// Variable: resumeQuery
-// Query: *[_type == "resume"][0]{ "url": file.asset->url, updatedAt}
-export type ResumeQueryResult = {
-  url: string | null;
-  updatedAt: string | null;
-} | null;
-
 // Source: ./src/app/(site)/contact/page.tsx
 // Variable: contactQuery
 // Query: *[_type == "contact"][0]{  email,  socialLinks[]{    platform,    url,    _key  }}
@@ -390,9 +395,14 @@ export type ExperienceQueryResult = Array<{
   title?: string;
   startYear?: number;
   endYear?: string;
-  department?: string;
-  url?: string;
-  company?: string;
+  department?: {
+    name?: string;
+    url?: string;
+  };
+  company?: {
+    name?: string;
+    url?: string;
+  };
   responsibilities?: Array<string>;
   orderRank?: string;
 }>;
@@ -492,8 +502,8 @@ import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "contact"][0]{\n  email,\n  github,\n  linkedin,\n  x\n}': GetContactQueryResult;
-    '*[_type == "about"][0]': AboutQueryResult;
     '*[_type == "resume"][0]{\n "url": file.asset->url,\n updatedAt\n}': ResumeQueryResult;
+    '*[_type == "about"][0]': AboutQueryResult;
     '*[_type == "contact"][0]{\n  email,\n  socialLinks[]{\n    platform,\n    url,\n    _key\n  }\n}': ContactQueryResult;
     '*[_type == "experience"] | order(orderRank)': ExperienceQueryResult;
     '*[_type == "media"] | order(orderRank)': MediaQueryResult;
