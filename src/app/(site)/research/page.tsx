@@ -1,42 +1,31 @@
+// ResearchPage.tsx
 'use client';
-
 import { useQuery } from '@tanstack/react-query';
-import { groq } from 'next-sanity';
+import { client } from '@/sanity/lib/client';
 import { Research } from '@/types';
 import { useRef } from 'react';
 import ScrollTitle from '@/app/(site)/_components/ScrollTitle';
 import FadeInWrapper from '@/app/(site)/_components/FadeInWrapper';
-import { client } from '@/sanity/lib/client';
 import { Loader } from '@/app/(site)/_components/Loader';
 import { PortableText } from '@portabletext/react';
 import { TypedObject } from '@portabletext/types';
 import { PortableTextMarkComponentProps } from '@portabletext/react';
 import Link from 'next/link';
-
-const researchQuery = groq`*[_type == "research"] | order(orderRank)`;
-
-async function fetchResearch(): Promise<Research[]> {
-  return (await client.fetch(researchQuery)) as Research[];
-}
-
-async function fetchResume() {
-  return await client.fetch(researchQuery);
-}
+import { useResume } from '@/app/(site)/lib/hooks/useResume';
+import { groq } from 'next-sanity';
 
 export default function ResearchPage() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { data: resume, isLoading: isLoadingResume } = useResume();
+  const researchQuery = groq`*[_type == "research"] | order(orderRank)`;
   const {
     data: researchItems,
     isLoading,
     error,
   } = useQuery({
     queryKey: ['research'],
-    queryFn: fetchResearch,
-  });
-
-  const { data: resume, isLoading: isLoadingResume } = useQuery({
-    queryKey: ['resume'],
-    queryFn: fetchResume,
+    queryFn: async () => await client.fetch(researchQuery) as Research[],
+    staleTime: 1000 * 60 * 5,
   });
 
   if (isLoading || isLoadingResume) return <Loader />;
@@ -44,31 +33,28 @@ export default function ResearchPage() {
 
   return (
     <div
-      ref={containerRef as React.RefObject<HTMLDivElement>}
+      ref={containerRef}
       className="h-full overflow-auto scrollbar-blue flex flex-col"
     >
       <ScrollTitle
         title="Research"
-        containerRef={containerRef as React.RefObject<HTMLDivElement>}
+        containerRef={containerRef}
       />
       <FadeInWrapper>
-        <div className="px-8 py-4 font-semibold text-sm bg-primary bg-opacity-10">
-          <p className="text-background ">
-            A complete list of published work can be seen in my{' '}
-            {resume?.url ? (
+        {resume?.url && (
+          <div className="px-8 py-3 font-semibold text-sm bg-primary bg-opacity-10">
+            <p className="text-background">
+              A complete list of published work can be seen in my{' '}
               <Link
                 href={resume.url}
                 target="_blank"
-                rel="noopener noreferrer"
                 className="text-background underline"
               >
                 CV
               </Link>
-            ) : (
-              'CV'
-            )}
-          </p>
-        </div>
+            </p>
+          </div>
+        )}
         {researchItems?.map((item: Research, index) => (
           <div key={item._id} className="px-8">
             <ResearchItem

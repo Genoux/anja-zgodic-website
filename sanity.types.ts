@@ -121,9 +121,11 @@ export type Contact = {
   _updatedAt: string;
   _rev: string;
   email?: string;
-  github?: string;
-  linkedin?: string;
-  x?: string;
+  socialLinks?: Array<{
+    platform?: 'github' | 'linkedin' | 'x';
+    url?: string;
+    _key: string;
+  }>;
 };
 
 export type Media = {
@@ -213,14 +215,16 @@ export type Experience = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  company?: string;
   startYear?: number;
   endYear?: string;
-  urls?: Array<{
+  department?: {
     name?: string;
     url?: string;
-    _key: string;
-  }>;
+  };
+  company?: {
+    name?: string;
+    url?: string;
+  };
   responsibilities?: Array<string>;
   orderRank?: string;
 };
@@ -320,12 +324,13 @@ export type AllSanitySchemaTypes =
   | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/app/(site)/page.tsx
-// Variable: settingsQuery
-// Query: *[_type == "contact"][0]{  email,  address,  socialLinks[]{    platform,    url,    icon  }}
-export type SettingsQueryResult = {
+// Variable: getContactQuery
+// Query: *[_type == "contact"][0]{  email,  github,  linkedin,  x}
+export type GetContactQueryResult = {
   email: string | null;
-  address: null;
-  socialLinks: null;
+  github: null;
+  linkedin: null;
+  x: null;
 } | null;
 
 // Source: ./src/app/(site)/_components/NavigationBar.tsx
@@ -366,6 +371,18 @@ export type AboutQueryResult = {
   }>;
 } | null;
 
+// Source: ./src/app/(site)/contact/page.tsx
+// Variable: contactQuery
+// Query: *[_type == "contact"][0]{  email,  socialLinks[]{    platform,    url,    _key  }}
+export type ContactQueryResult = {
+  email: string | null;
+  socialLinks: Array<{
+    platform: 'github' | 'linkedin' | 'x' | null;
+    url: string | null;
+    _key: string;
+  }> | null;
+} | null;
+
 // Source: ./src/app/(site)/experience/page.tsx
 // Variable: experienceQuery
 // Query: *[_type == "experience"] | order(orderRank)
@@ -376,25 +393,19 @@ export type ExperienceQueryResult = Array<{
   _updatedAt: string;
   _rev: string;
   title?: string;
-  company?: string;
   startYear?: number;
   endYear?: string;
-  urls?: Array<{
+  department?: {
     name?: string;
     url?: string;
-    _key: string;
-  }>;
+  };
+  company?: {
+    name?: string;
+    url?: string;
+  };
   responsibilities?: Array<string>;
   orderRank?: string;
 }>;
-
-// Source: ./src/app/(site)/contact/page.tsx
-// Variable: contactQuery
-// Query: *[_type == "contact"][0]{  email,  socialLinks[]{    platform,    url,    icon  }}
-export type ContactQueryResult = {
-  email: string | null;
-  socialLinks: null;
-} | null;
 
 // Source: ./src/app/(site)/media/page.tsx
 // Variable: mediaQuery
@@ -490,11 +501,11 @@ export type SoftwareQueryResult = Array<{
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "contact"][0]{\n  email,\n  address,\n  socialLinks[]{\n    platform,\n    url,\n    icon\n  }\n}': SettingsQueryResult;
+    '*[_type == "contact"][0]{\n  email,\n  github,\n  linkedin,\n  x\n}': GetContactQueryResult;
     '*[_type == "resume"][0]{\n "url": file.asset->url,\n updatedAt\n}': ResumeQueryResult;
     '*[_type == "about"][0]': AboutQueryResult;
+    '*[_type == "contact"][0]{\n  email,\n  socialLinks[]{\n    platform,\n    url,\n    _key\n  }\n}': ContactQueryResult;
     '*[_type == "experience"] | order(orderRank)': ExperienceQueryResult;
-    '*[_type == "contact"][0]{\n  email,\n  socialLinks[]{\n    platform,\n    url,\n    icon\n  }\n}': ContactQueryResult;
     '*[_type == "media"] | order(orderRank)': MediaQueryResult;
     '*[_type == "research"] | order(orderRank)': ResearchQueryResult;
     '*[_type == "software"] | order(orderRank)': SoftwareQueryResult;

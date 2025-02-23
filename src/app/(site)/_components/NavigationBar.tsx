@@ -1,23 +1,12 @@
+// NavigationBar.tsx
 'use client';
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { X, Menu } from 'lucide-react';
 import clsx from 'clsx';
-import { useQuery } from '@tanstack/react-query';
-import { groq } from 'next-sanity';
-import { client } from '@/sanity/lib/client';
 import { motion } from 'framer-motion';
-
-const resumeQuery = groq`*[_type == "resume"][0]{
- "url": file.asset->url,
- updatedAt
-}`;
-
-async function fetchResume() {
-  return await client.fetch(resumeQuery);
-}
+import { useResume } from '@/app/(site)/lib/hooks/useResume';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -59,11 +48,7 @@ const NavigationBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === '/';
-
-  const { data: resume } = useQuery({
-    queryKey: ['resume'],
-    queryFn: fetchResume,
-  });
+  const { data: resume } = useResume();
 
   const navItems = [
     { name: 'ABOUT', href: '/about' },
@@ -121,13 +106,15 @@ const NavigationBar = () => {
                 {item.name}
               </Link>
             ))}
-            <Link
-              href={resume?.url || ''}
-              className="mt-4 border border-secondary text-secondary px-4 py-2 font-bold hover:bg-background hover:text-primary transition-all duration-200 ease-in-out border-background"
-              target="_blank"
-            >
-              Download CV
-            </Link>
+            {resume?.url && (
+              <Link
+                href={resume.url}
+                className="mt-4 border border-secondary text-secondary px-4 py-2 font-bold hover:bg-background hover:text-primary transition-all duration-200 ease-in-out border-background"
+                target="_blank"
+              >
+                Download CV
+              </Link>
+            )}
           </nav>
         </div>
       )}
@@ -177,13 +164,15 @@ const NavigationBar = () => {
             </motion.div>
           ))}
           <motion.div variants={itemVariants} className="w-full">
-            <Link
-              target="_blank"
-              href={resume?.url || ''}
-              className="border uppercase border-primary text-primary w-full px-6 py-4 text-sm text-center font-bold hover:bg-primary hover:text-background transition-all duration-125 ease-in-out block"
-            >
-              Download CV
-            </Link>
+            {resume?.url && (
+              <Link
+                target="_blank"
+                href={resume.url}
+                className="border uppercase border-primary text-primary w-full px-6 py-4 text-sm text-center font-bold hover:bg-primary hover:text-background transition-all duration-125 ease-in-out block"
+              >
+                Download CV
+              </Link>
+            )}
           </motion.div>
         </motion.div>
       </nav>

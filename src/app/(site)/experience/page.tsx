@@ -7,23 +7,7 @@ import FadeInWrapper from '@/app/(site)/_components/FadeInWrapper';
 import { client } from '@/sanity/lib/client';
 import { Loader } from '@/app/(site)/_components/Loader';
 import Link from 'next/link';
-
-interface UrlItem {
-  name: string;
-  url: string;
-}
-
-interface Experience {
-  _id: string;
-  _type: string;
-  title: string;
-  company: string;
-  startYear: number;
-  endYear: string;
-  urls: UrlItem[];
-  responsibilities: string[];
-  orderRank: number;
-}
+import { Experience } from '@/types';
 
 const experienceQuery = groq`*[_type == "experience"] | order(orderRank)`;
 
@@ -86,19 +70,37 @@ function ExperienceItem({
         <p className="text-base">
           {item.startYear} - {item.endYear || 'Present'}
         </p>
-
         <div className="flex flex-col gap-2">
-          {item.urls?.map((urlItem, index) => (
-            <Link
-              key={index}
-              href={urlItem.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary underline block"
-            >
-              <p className={index === 0 ? "text-lg" : "text-sm"}>{urlItem.name}</p>
-            </Link>
-          ))}
+          <div className="flex flex-col">
+            {item.department && (
+              item.department.url ? (
+                <Link
+                  href={item.department.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary underline"
+                >
+                  <p className="text-lg">{item.department.name}</p>
+                </Link>
+              ) : (
+                <p className="text-lg">{item.department.name}</p>
+              )
+            )}
+            {item.company && (
+              item.company.url ? (
+                <Link
+                  href={item.company.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary underline"
+                >
+                  <p className="text-md text-primary mt-2">{item.company.name}</p>
+                </Link>
+              ) : (
+                <p className="text-md text-primary mt-2">{item.company.name}</p>
+              )
+            )}
+          </div>
         </div>
       </div>
       <div className="flex flex-col gap-4">
@@ -107,7 +109,7 @@ function ExperienceItem({
         </h3>
         {item.responsibilities && item.responsibilities.length > 0 && (
           <ul className="list-disc ml-5 space-y-1">
-            {item.responsibilities.map((responsibility, index) => (
+            {item.responsibilities.map((responsibility: string, index: number) => (
               <li key={index} className="text-base">
                 {responsibility}
               </li>
