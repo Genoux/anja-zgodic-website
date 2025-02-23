@@ -121,13 +121,15 @@ const NavigationBar = () => {
                 {item.name}
               </Link>
             ))}
-            <Link
-              href={resume?.url || ''}
-              className="mt-4 border border-secondary text-secondary px-4 py-2 font-bold hover:bg-background hover:text-primary transition-all duration-200 ease-in-out border-background"
-              target="_blank"
-            >
-              Download CV
-            </Link>
+            {resume && resume.url && (
+              <Link
+                href={resume.url}
+                className="mt-4 border border-secondary text-secondary px-4 py-2 font-bold hover:bg-background hover:text-primary transition-all duration-200 ease-in-out border-background"
+                target="_blank"
+              >
+                Download CV
+              </Link>
+            )}
           </nav>
         </div>
       )}
@@ -177,13 +179,15 @@ const NavigationBar = () => {
             </motion.div>
           ))}
           <motion.div variants={itemVariants} className="w-full">
-            <Link
-              target="_blank"
-              href={resume?.url || ''}
-              className="border uppercase border-primary text-primary w-full px-6 py-4 text-sm text-center font-bold hover:bg-primary hover:text-background transition-all duration-125 ease-in-out block"
-            >
-              Download CV
-            </Link>
+            {resume && resume.url && (
+              <Link
+                target="_blank"
+                href={resume.url}
+                className="border uppercase border-primary text-primary w-full px-6 py-4 text-sm text-center font-bold hover:bg-primary hover:text-background transition-all duration-125 ease-in-out block"
+              >
+                Download CV
+              </Link>
+            )}
           </motion.div>
         </motion.div>
       </nav>

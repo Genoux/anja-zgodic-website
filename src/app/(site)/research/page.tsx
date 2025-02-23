@@ -52,23 +52,20 @@ export default function ResearchPage() {
         containerRef={containerRef as React.RefObject<HTMLDivElement>}
       />
       <FadeInWrapper>
-        <div className="px-8 py-4 font-semibold text-sm bg-primary bg-opacity-10">
-          <p className="text-background ">
-            A complete list of published work can be seen in my{' '}
-            {resume?.url ? (
+        {resume.url && (
+          <div className="px-8 py-3 font-semibold text-sm bg-primary bg-opacity-10">
+            <p className="text-background">
+              A complete list of published work can be seen in my{' '}
               <Link
                 href={resume.url}
                 target="_blank"
-                rel="noopener noreferrer"
                 className="text-background underline"
               >
                 CV
               </Link>
-            ) : (
-              'CV'
-            )}
-          </p>
-        </div>
+            </p>
+          </div>
+        )}
         {researchItems?.map((item: Research, index) => (
           <div key={item._id} className="px-8">
             <ResearchItem
